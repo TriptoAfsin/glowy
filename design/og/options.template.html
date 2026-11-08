@@ -1,0 +1,173 @@
+<title>Glowy Share Image</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the chosen option large on the left; on the right, the same image as a link preview at feed size and at chat-thumbnail size; option strip below.
+   Single dark look on purpose, matching the app and the share image itself. */
+:root {
+  --bg: oklch(12.5% 0.028 262);
+  --surface: oklch(17% 0.032 262);
+  --surface-2: oklch(22% 0.036 262);
+  --line: oklch(28% 0.03 262);
+  --fg: oklch(95% 0.012 240);
+  --fg-2: oklch(74% 0.025 245);
+  --fg-3: oklch(56% 0.03 250);
+  --accent: oklch(82% 0.1 226);
+  --accent-ink: oklch(16% 0.04 255);
+  --warm: oklch(88% 0.11 78);
+  --font-display: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); color: var(--fg); }
+body { font-family: var(--font-display); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+.wrap { max-width: 1320px; margin: 0 auto; padding-block: 28px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 24px; }
+
+header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; }
+.eyebrow { font: 500 12.5px var(--font-mono); color: var(--fg-3); letter-spacing: 0.04em; }
+h1 { margin: 6px 0 0; font: 600 clamp(30px, 4.4vw, 46px)/1.05 var(--font-display); letter-spacing: -0.035em; text-wrap: balance; }
+h1 span { color: var(--warm); }
+.lede { margin: 10px 0 0; max-width: 62ch; color: var(--fg-2); }
+.spec { font: 400 12.5px var(--font-mono); color: var(--fg-3); text-align: right; display: flex; flex-direction: column; gap: 3px; }
+
+.main { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 20px; align-items: start; }
+.hero { margin: 0; min-width: 0; padding: 14px; border-radius: 20px; background: var(--surface); display: flex; flex-direction: column; gap: 12px; }
+.hero img { display: block; width: 100%; height: auto; aspect-ratio: 1200 / 630; border-radius: 10px; box-shadow: 0 0 0 1px var(--line); }
+.hero figcaption { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13.5px; color: var(--fg-2); }
+.hero figcaption b { color: var(--fg); font-weight: 600; }
+
+.side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.panel { padding: 18px; border-radius: 20px; background: var(--surface); display: flex; flex-direction: column; gap: 12px; }
+.panel h2 { margin: 0; font: 500 12px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-3); }
+.panel p { margin: 0; color: var(--fg-2); font-size: 14px; }
+/* Generic link-preview card at feed size */
+.card { border-radius: 14px; overflow: hidden; background: var(--bg); box-shadow: 0 0 0 1px var(--line); }
+.card img { display: block; width: 100%; aspect-ratio: 1200 / 630; height: auto; }
+.card .meta { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 2px; }
+.card .domain { font: 400 12px var(--font-mono); color: var(--fg-3); }
+.card .t { font-weight: 600; font-size: 14px; }
+.card .d { font-size: 13px; color: var(--fg-2); }
+/* Compact chat-style preview: a small thumbnail beside the text */
+.mini { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 12px; align-items: center; padding: 10px; border-radius: 12px; background: var(--bg); box-shadow: 0 0 0 1px var(--line); }
+.mini img { width: 120px; aspect-ratio: 1200 / 630; height: auto; border-radius: 6px; display: block; }
+.mini .t { font-weight: 600; font-size: 13.5px; }
+.mini .domain { font: 400 11.5px var(--font-mono); color: var(--fg-3); }
+
+.pick { display: inline-flex; justify-content: center; align-items: center; height: 44px; border-radius: 999px; border: 0; cursor: pointer; font: 500 14px var(--font-display); background: var(--accent); color: var(--accent-ink); transition: filter 0.15s; }
+.pick:hover { filter: brightness(1.06); }
+.pick[data-picked="true"] { background: var(--surface-2); color: var(--fg); }
+.note { font-size: 12.5px; color: var(--fg-3); }
+
+.strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.opt { appearance: none; border: 0; padding: 0; background: none; color: inherit; text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 9px; min-width: 0; }
+.opt img { display: block; width: 100%; aspect-ratio: 1200 / 630; height: auto; border-radius: 10px; box-shadow: 0 0 0 1px var(--line); transition: box-shadow 0.15s; }
+.opt span { display: flex; gap: 8px; font-size: 13.5px; color: var(--fg-2); }
+.opt span b { font: 500 12px var(--font-mono); color: var(--fg-3); padding-top: 1px; }
+.opt[aria-current="true"] img { box-shadow: 0 0 0 2px var(--accent); }
+.opt[aria-current="true"] span { color: var(--fg); }
+.opt:hover img { box-shadow: 0 0 0 2px var(--fg-3); }
+.opt[aria-current="true"]:hover img { box-shadow: 0 0 0 2px var(--accent); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 12px; }
+footer { font-size: 13px; color: var(--fg-3); max-width: 72ch; }
+
+@media (max-width: 980px) { .main { grid-template-columns: minmax(0, 1fr); } .spec { text-align: left; } }
+@media (max-width: 640px) { .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } .hero { padding: 8px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">GLOWY · SHARE IMAGE</div>
+      <h1>Glow on <span>every</span> call.</h1>
+      <p class="lede">Three meeting scenes built on the glow you liked in option 1, with option 1 alongside for comparison. Pick the one you want people to see when glowy.t21.dev is shared on X, LinkedIn, Slack, WhatsApp or Discord.</p>
+    </div>
+    <div class="spec"><span>1200 × 630 · PNG</span><span>og:image + twitter:image</span><span>shown below at three sizes</span></div>
+  </header>
+
+  <div class="main">
+    <figure class="hero">
+      <img id="big" alt="">
+      <figcaption><span><b id="bigName"></b> · <span id="bigBlurb"></span></span><span class="mono" id="bigCode"></span></figcaption>
+    </figure>
+
+    <aside class="side">
+      <div class="panel">
+        <h2>In a feed</h2>
+        <div class="card">
+          <img id="feed" alt="">
+          <div class="meta">
+            <span class="domain">glowy.t21.dev</span>
+            <span class="t">Glowy · Soft ring light for video calls</span>
+            <span class="d">Turn any screen into a soft, flattering ring light for your video calls.</span>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>In a chat</h2>
+        <div class="mini">
+          <img id="chat" alt="">
+          <div><div class="t">Glowy · Soft ring light for video calls</div><div class="domain">glowy.t21.dev</div></div>
+        </div>
+        <p>At this size only big shapes survive. Check the artwork still reads.</p>
+      </div>
+      <div class="panel">
+        <button type="button" class="pick" id="pick">Mark as favourite</button>
+        <span class="note" id="note">Saved in this browser only. Tell Claude which one to use.</span>
+      </div>
+    </aside>
+  </div>
+
+  <div class="strip" id="strip" role="list"></div>
+
+  <footer>Artwork only differs on the right half. The headline, supporting line and app chips stay the same in every option. The names on the other call tiles are placeholders.</footer>
+</div>
+
+<script type="application/json" id="imgs">__IMGS__</script>
+<script>
+(function () {
+  const imgs = JSON.parse(document.getElementById('imgs').textContent);
+  const O = [
+    { id: 'o5', n: 5, name: 'Speaker view (chosen)', blurb: 'A video call where your tile, with a real photo, is the softly lit one. This is now the live share image.' },
+    { id: 'o6', n: 6, name: 'Pop-out over a meeting', blurb: 'The Glowy pop-out window floating over a call, spilling light onto your tile.' },
+    { id: 'o7', n: 7, name: 'Before / with Glowy', blurb: 'One call tile split down the middle: flat and grey, then warmly lit.' },
+    { id: 'o1', n: 1, name: 'Glow field (earlier)', blurb: 'The earlier option you half-liked, kept here for comparison. Its glow sits behind 5–7.' },
+  ];
+  let cur = 'o5', picked = null;
+  try { picked = localStorage.getItem('glowy-og-pick'); } catch (e) {}
+
+  const strip = document.getElementById('strip');
+  O.forEach(o => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'opt'; b.id = 'opt-' + o.id; b.setAttribute('role', 'listitem');
+    b.innerHTML = '<img alt="Option ' + o.n + ': ' + o.name + '"><span><b>' + o.n + '</b>' + o.name + '</span>';
+    b.querySelector('img').src = imgs[o.n];
+    b.addEventListener('click', () => { location.hash = o.id; });
+    strip.appendChild(b);
+  });
+
+  function render() {
+    const o = O.find(x => x.id === cur);
+    ['big', 'feed', 'chat'].forEach(id => { const el = document.getElementById(id); el.src = imgs[o.n]; el.alt = 'Share image option ' + o.n + ': ' + o.name; });
+    document.getElementById('bigName').textContent = o.n + ' · ' + o.name;
+    document.getElementById('bigBlurb').textContent = o.blurb;
+    O.forEach(x => document.getElementById('opt-' + x.id).setAttribute('aria-current', x.id === cur));
+    const isPicked = picked === o.id, pick = document.getElementById('pick');
+    pick.dataset.picked = isPicked;
+    pick.textContent = isPicked ? 'Marked as favourite' : 'Mark option ' + o.n + ' as favourite';
+    const p = O.find(x => x.id === picked);
+    document.getElementById('note').textContent = p ? 'Your favourite: ' + p.n + ' · ' + p.name + '. Saved in this browser only, so tell Claude your pick.' : 'Saved in this browser only. Tell Claude which one to use.';
+  }
+  document.getElementById('pick').addEventListener('click', () => {
+    picked = picked === cur ? null : cur;
+    try { picked ? localStorage.setItem('glowy-og-pick', picked) : localStorage.removeItem('glowy-og-pick'); } catch (e) {}
+    render();
+  });
+  function route() { const h = location.hash.slice(1); if (O.some(o => o.id === h)) cur = h; render(); }
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>

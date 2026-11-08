@@ -5,97 +5,191 @@
 <title>Glowy OG image</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <style>
-/* Source for public/og-image.png (1200×630). Render with: python scripts/render-og.py
-   Layout: headline left; right, the product in one picture: a portrait lit by a ring light inside a kelvin dial. */
+/* Source for public/og-image.png (1200×630). Render with: python scripts/render-og.py [variant]
+   Variants (pick with #1..#4): 1 glow field · 2 product shot · 3 tone spectrum · 4 screen as light. */
 :root {
   --night: oklch(12.5% 0.03 262);
   --night-2: oklch(19% 0.035 262);
   --ink: oklch(97% 0.01 240);
   --ink-2: oklch(76% 0.025 245);
   --ink-3: oklch(55% 0.03 250);
-  --accent: oklch(82% 0.1 226);
   --warm: oklch(88% 0.11 78);
+  --sky: oklch(84% 0.09 232);
+  --tick: oklch(70% 0.04 250 / 0.6);
 }
 * { box-sizing: border-box; margin: 0; }
 html, body { width: 1200px; height: 630px; overflow: hidden; background: var(--night); }
 body { font-family: 'Geist', system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; position: relative; }
-.bg { position: absolute; inset: 0;
-  background:
-    radial-gradient(560px 560px at 860px 315px, oklch(62% 0.13 240 / 0.30), transparent 70%),
-    radial-gradient(420px 300px at 1040px 520px, oklch(80% 0.1 75 / 0.12), transparent 70%),
-    radial-gradient(700px 420px at 0px 640px, oklch(38% 0.08 258 / 0.40), transparent 70%),
-    var(--night); }
-.art { position: absolute; left: 600px; top: 0; width: 520px; height: 630px; }
-.copy { position: absolute; left: 76px; top: 0; bottom: 0; width: 520px; display: flex; flex-direction: column; justify-content: center; gap: 26px; }
+.bg { position: absolute; inset: 0; background: radial-gradient(700px 420px at 0px 640px, oklch(38% 0.08 258 / 0.40), transparent 70%), var(--night); }
+
+.copy { position: absolute; left: 76px; top: 0; bottom: 0; width: 520px; display: flex; flex-direction: column; justify-content: center; gap: 26px; z-index: 2; }
 .brand { display: flex; align-items: baseline; gap: 14px; }
 .brand b { font: 600 30px 'Geist', sans-serif; letter-spacing: -0.03em; }
 .brand span { font: 500 18px 'Geist Mono', monospace; color: var(--ink-3); }
-h1 { font: 600 96px/0.95 'Geist', sans-serif; letter-spacing: -0.055em; text-wrap: balance; }
+h1 { font: 600 96px/0.95 'Geist', sans-serif; letter-spacing: -0.055em; }
 h1 em { font-style: normal; color: var(--warm); }
 .sub { font: 400 28px/1.3 'Geist', sans-serif; color: var(--ink-2); letter-spacing: -0.015em; max-width: 470px; }
 .apps { display: flex; gap: 10px; }
 .apps span { font: 500 17px 'Geist Mono', monospace; color: var(--ink-2); padding: 8px 14px; border-radius: 999px; background: var(--night-2); }
+
+.art { position: absolute; inset: 0; display: none; }
+body[data-v='1'] .v1, body[data-v='2'] .v2, body[data-v='3'] .v3, body[data-v='4'] .v4,
+body[data-v='5'] .v5, body[data-v='6'] .v6, body[data-v='7'] .v7 { display: block; }
+/* Shared glow-field atmosphere for the meeting options (5-7) */
+body[data-v='5'] .v1, body[data-v='6'] .v1, body[data-v='7'] .v1 { display: block; }
+body[data-v='5'] .v1 svg, body[data-v='6'] .v1 svg, body[data-v='7'] .v1 svg { display: none; }
+body[data-v='5'] .v1 .field, body[data-v='6'] .v1 .field, body[data-v='7'] .v1 .field { opacity: 0.55; }
+
+/* Call tiles (generic, no real app's chrome) */
+.tile { position: absolute; border-radius: 14px; overflow: hidden; background: oklch(20% 0.03 262); box-shadow: 0 0 0 1px oklch(100% 0 0 / 0.07), 0 30px 60px -30px oklch(4% 0.02 262 / 0.9); }
+.tile .av { position: absolute; left: 50%; top: 46%; width: 30%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; display: grid; place-items: center;
+  background: oklch(30% 0.035 262); color: oklch(70% 0.03 250); font: 600 22px 'Geist', sans-serif; letter-spacing: -0.02em; }
+.tile .nm { position: absolute; left: 10px; bottom: 9px; padding: 3px 9px; border-radius: 999px; font: 500 13px 'Geist', sans-serif; color: oklch(86% 0.02 240); background: oklch(10% 0.02 262 / 0.6); }
+.tile.lit { background: radial-gradient(70% 90% at 50% 40%, oklch(96% 0.05 85), oklch(86% 0.07 70) 45%, oklch(70% 0.08 240) 100%);
+  box-shadow: 0 0 0 1px oklch(100% 0 0 / 0.5), 0 0 80px 10px oklch(90% 0.09 80 / 0.45), 0 40px 80px -30px oklch(4% 0.02 262 / 0.8); }
+.tile.lit .face { position: absolute; left: 50%; top: 44%; width: 34%; aspect-ratio: 0.8; transform: translate(-50%, -50%); border-radius: 50%;
+  background: radial-gradient(60% 55% at 50% 38%, oklch(98% 0.03 85), oklch(88% 0.06 60) 70%, oklch(80% 0.07 55)); box-shadow: 0 0 40px 10px oklch(98% 0.04 85 / 0.6); }
+.tile.lit .body { position: absolute; left: 50%; bottom: -18%; width: 78%; height: 40%; transform: translateX(-50%); border-radius: 50% 50% 0 0;
+  background: linear-gradient(oklch(80% 0.06 60), oklch(68% 0.07 240)); }
+.tile.lit .nm { color: oklch(18% 0.03 262); background: oklch(98% 0.02 85 / 0.75); }
+.tile .mic { position: absolute; right: 10px; bottom: 9px; width: 24px; height: 24px; border-radius: 50%; background: oklch(10% 0.02 262 / 0.6); }
+.tile .mic::after { content: ""; position: absolute; left: 9px; top: 5px; width: 6px; height: 10px; border-radius: 3px; border: 1.6px solid oklch(86% 0.02 240); }
+
+/* Real photo in the lit tile: a soft warm ring-light grade over it, brightest on the face */
+.tile.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: brightness(1.06) saturate(1.04); }
+.tile.photo .grade { position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(48% 62% at 50% 34%, oklch(96% 0.06 80 / 0.42), transparent 70%); mix-blend-mode: soft-light; }
+
+/* 5 - Speaker view */
+.v5 .big { left: 616px; top: 150px; width: 380px; height: 256px; }
+.v5 .s1 { left: 1008px; top: 150px; width: 160px; height: 120px; }
+.v5 .s2 { left: 1008px; top: 286px; width: 160px; height: 120px; }
+.v5 .s3 { left: 616px; top: 422px; width: 186px; height: 110px; }
+.v5 .s4 { left: 814px; top: 422px; width: 182px; height: 110px; }
+.v5 .s5 { left: 1008px; top: 422px; width: 160px; height: 110px; }
+
+/* 6 - Pop-out over a meeting */
+.v6 .win { position: absolute; left: 640px; top: 130px; width: 520px; height: 340px; border-radius: 18px; background: oklch(15% 0.028 262);
+  box-shadow: 0 0 0 1px oklch(100% 0 0 / 0.08), 0 50px 90px -30px oklch(4% 0.02 262 / 0.9); }
+.v6 .win .tile { box-shadow: 0 0 0 1px oklch(100% 0 0 / 0.06); }
+.v6 .w1 { left: 14px; top: 14px; width: 240px; height: 150px; } .v6 .w2 { left: 266px; top: 14px; width: 240px; height: 150px; }
+.v6 .w3 { left: 14px; top: 176px; width: 240px; height: 150px; } .v6 .w4 { left: 266px; top: 176px; width: 240px; height: 150px; }
+.v6 .spill { position: absolute; left: 860px; top: 200px; width: 380px; height: 380px; border-radius: 50%; background: radial-gradient(closest-side, oklch(95% 0.07 85 / 0.55), transparent); filter: blur(10px); mix-blend-mode: screen; }
+.v6 .pop { position: absolute; left: 1028px; top: 318px; width: 150px; height: 230px; border-radius: 16px;
+  background: radial-gradient(90% 70% at 30% 20%, oklch(98% 0.05 88), transparent 70%), radial-gradient(90% 80% at 80% 90%, oklch(88% 0.07 232), transparent 70%), oklch(95% 0.04 220);
+  box-shadow: 0 0 0 1px oklch(100% 0 0 / 0.7), 0 0 90px 20px oklch(92% 0.08 80 / 0.5), 0 30px 60px -20px oklch(4% 0.02 262 / 0.8); }
+.v6 .pop i { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); width: 90px; height: 22px; border-radius: 999px; background: oklch(15% 0.025 262 / 0.85); }
+.v6 .tag { position: absolute; left: 1028px; top: 558px; width: 150px; text-align: center; font: 500 14px 'Geist Mono', monospace; color: oklch(84% 0.06 85); }
+
+/* 7 - Before / with Glowy */
+.v7 .tile.split { left: 640px; top: 150px; width: 520px; height: 330px; }
+.v7 .half { position: absolute; inset: 0; }
+.v7 .before { background: linear-gradient(oklch(34% 0.012 250), oklch(26% 0.01 250)); }
+.v7 .before .face { position: absolute; left: 50%; top: 44%; width: 26%; aspect-ratio: 0.8; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(60% 55% at 50% 38%, oklch(52% 0.02 50), oklch(40% 0.02 40)); }
+.v7 .before .body { position: absolute; left: 50%; bottom: -12%; width: 64%; height: 36%; transform: translateX(-50%); border-radius: 50% 50% 0 0; background: oklch(30% 0.015 250); }
+.v7 .after { clip-path: inset(0 0 0 50%); }
+.v7 .after.lit { position: absolute; inset: 0; border-radius: 0; box-shadow: none; }
+.v7 .after .face { width: 26%; } .v7 .after .body { width: 64%; bottom: -12%; height: 36%; }
+.v7 .handle { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: oklch(98% 0.01 240); }
+.v7 .handle::after { content: ""; position: absolute; left: 50%; top: 50%; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; background: oklch(98% 0.01 240); box-shadow: 0 0 0 4px oklch(10% 0.02 262 / 0.5); }
+.v7 .lbl { position: absolute; top: 12px; padding: 4px 10px; border-radius: 999px; font: 500 14px 'Geist', sans-serif; }
+.v7 .lbl.l { left: 12px; color: oklch(86% 0.02 240); background: oklch(10% 0.02 262 / 0.6); }
+.v7 .lbl.r { right: 12px; color: oklch(18% 0.03 262); background: oklch(96% 0.04 85); }
+
+/* 1 · Glow field: the app's glows, blended, with a kelvin dial arc */
+.v1 .field { position: absolute; inset: 0;
+  background:
+    radial-gradient(420px 420px at 1010px 170px, oklch(90% 0.11 82 / 0.95), transparent 70%),
+    radial-gradient(480px 480px at 860px 470px, oklch(80% 0.1 232 / 0.9), transparent 70%),
+    radial-gradient(360px 360px at 1120px 470px, oklch(95% 0.04 240 / 0.8), transparent 70%),
+    radial-gradient(300px 300px at 760px 230px, oklch(86% 0.07 40 / 0.55), transparent 70%); filter: blur(8px); }
+.v1 .fade { position: absolute; inset: 0; background: linear-gradient(90deg, var(--night) 34%, oklch(12.5% 0.03 262 / 0.6) 52%, transparent 72%); }
+
+/* 2 · Product shot: the real app, tilted */
+.v2 .glow { position: absolute; left: 640px; top: 90px; width: 640px; height: 460px; background: radial-gradient(closest-side, oklch(75% 0.11 232 / 0.55), transparent); filter: blur(30px); }
+.v2 img { position: absolute; left: 640px; top: 112px; width: 640px; border-radius: 16px;
+  transform: perspective(1400px) rotateY(-16deg) rotateX(5deg) rotateZ(1deg); transform-origin: left center;
+  box-shadow: 0 50px 90px -30px oklch(5% 0.02 262 / 0.9), 0 0 0 1px oklch(100% 0 0 / 0.08); }
+
+/* 3 · Tone spectrum: six light swatches on an arc */
+.v3 .sw { position: absolute; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: var(--c);
+  box-shadow: 0 0 60px 6px color-mix(in srgb, var(--c) 55%, transparent), inset 0 0 0 1px oklch(100% 0 0 / 0.25); }
+.v3 .sw.on { width: 118px; height: 118px; margin: -59px 0 0 -59px; box-shadow: 0 0 90px 14px color-mix(in srgb, var(--c) 65%, transparent), 0 0 0 6px var(--night), 0 0 0 8px var(--sky); }
+.v3 .k { position: absolute; transform: translate(-50%, 0); font: 500 16px 'Geist Mono', monospace; color: var(--ink-3); white-space: nowrap; }
+.v3 .k.on { color: var(--ink); }
+
+/* 4 · Screen as light: a glowing panel throwing a soft beam */
+.v4 .beam { position: absolute; left: 560px; top: 0; width: 640px; height: 630px;
+  background: radial-gradient(70% 60% at 30% 50%, oklch(95% 0.05 85 / 0.45), transparent 70%);
+  clip-path: polygon(64% 18%, 64% 82%, 0% 112%, 0% -12%); filter: blur(18px); }
+.v4 .screen { position: absolute; left: 930px; top: 150px; width: 220px; height: 330px; border-radius: 18px;
+  background: linear-gradient(160deg, oklch(98% 0.03 90), oklch(93% 0.06 232));
+  box-shadow: 0 0 80px 20px oklch(92% 0.07 80 / 0.55), 0 0 200px 60px oklch(80% 0.1 232 / 0.35), inset 0 0 0 1px oklch(100% 0 0 / 0.6); }
+.v4 .stand { position: absolute; left: 1028px; top: 480px; width: 24px; height: 60px; background: oklch(26% 0.03 262); }
+.v4 .base { position: absolute; left: 980px; top: 538px; width: 120px; height: 10px; border-radius: 6px; background: oklch(26% 0.03 262); }
+.v4 .floor { position: absolute; left: 600px; top: 548px; width: 600px; height: 82px; background: radial-gradient(60% 100% at 70% 0%, oklch(90% 0.06 80 / 0.25), transparent 70%); }
 </style>
 </head>
-<body>
+<body data-v="5">
   <div class="bg"></div>
 
-  <svg class="art" viewBox="0 0 520 630" aria-hidden="true">
-    <defs>
-      <!-- ring: warm at the top-left, ice blue at the bottom-right (the app's 2700 K → 6500 K range) -->
-      <linearGradient id="ring" x1="0.1" y1="0" x2="0.9" y2="1">
-        <stop offset="0" stop-color="#FFE3A8" />
-        <stop offset="0.45" stop-color="#FFF8EE" />
-        <stop offset="1" stop-color="#BFE4FF" />
-      </linearGradient>
-      <filter id="bloom" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="26" /></filter>
-      <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" /></filter>
-      <!-- the light falling on the face from the ring -->
-      <!-- the light falling on the person: brightest on the face, fading down the shoulders -->
-      <radialGradient id="facelight" cx="50%" cy="22%" r="58%">
-        <stop offset="0" stop-color="#FFF3E0" stop-opacity="1" />
-        <stop offset="0.28" stop-color="#F6DCC2" stop-opacity="0.85" />
-        <stop offset="0.62" stop-color="#8E8FB0" stop-opacity="0.35" />
-        <stop offset="1" stop-color="#1A2340" stop-opacity="0" />
-      </radialGradient>
-      <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#3B4672" />
-        <stop offset="1" stop-color="#141C38" />
-      </linearGradient>
-      <radialGradient id="aura" r="50%">
-        <stop offset="0" stop-color="#FFE9C9" stop-opacity="0.55" />
-        <stop offset="1" stop-color="#FFE9C9" stop-opacity="0" />
-      </radialGradient>
-      <path id="person" d="M260 206 C 298 206 320 234 320 272 C 320 300 310 322 297 337 C 293 342 291 349 291 357 L 291 370 C 291 382 299 390 313 394 C 360 406 398 430 414 482 L 414 520 L 106 520 L 106 482 C 122 430 160 406 207 394 C 221 390 229 382 229 370 L 229 357 C 229 349 227 342 223 337 C 210 322 200 300 200 272 C 200 234 222 206 260 206 Z" />
-      <clipPath id="inside"><circle cx="260" cy="315" r="160" /></clipPath>
-    </defs>
+  <div class="art v1">
+    <div class="field"></div>
+    <svg width="1200" height="630" style="position:absolute;inset:0">
+      <circle cx="960" cy="315" r="300" fill="none" stroke="var(--tick)" stroke-width="12" stroke-dasharray="1.5 14.2" transform="rotate(-90 960 315)" />
+    </svg>
+    <div class="fade"></div>
+  </div>
 
-    <!-- kelvin dial around the ring -->
-    <circle cx="260" cy="315" r="236" fill="none" stroke="#5B6B8C" stroke-opacity="0.55" stroke-width="10"
-      stroke-dasharray="1.5 11.85" transform="rotate(-90 260 315)" />
-    <circle cx="260" cy="315" r="236" fill="none" stroke="#8FA3C7" stroke-opacity="0.8" stroke-width="16"
-      stroke-dasharray="2 72.1" transform="rotate(-90 260 315)" />
-    <text x="78" y="88" fill="#FFD98A" font-family="Geist Mono, monospace" font-size="17" font-weight="500">2700 K</text>
-    <text x="378" y="560" fill="#A9D8FF" font-family="Geist Mono, monospace" font-size="17" font-weight="500">6500 K</text>
+  <div class="art v2">
+    <div class="glow"></div>
+    <img src="../../docs/screenshot-glow.png" alt="">
+  </div>
 
-    <!-- inner darkness + portrait -->
-    <circle cx="260" cy="315" r="164" fill="#0E1530" />
-    <g clip-path="url(#inside)">
-      <circle cx="260" cy="315" r="164" fill="#16204A" opacity="0.6" />
-      <!-- warm spill on the wall behind the head -->
-      <ellipse cx="260" cy="270" rx="120" ry="120" fill="url(#aura)" />
-      <!-- one continuous head-and-shoulders silhouette -->
-      <use href="#person" fill="url(#body)" />
-      <!-- soft key light from the ring falling on the face -->
-      <use href="#person" fill="url(#facelight)" />
-    </g>
+  <div class="art v3">
+    <svg width="1200" height="630" style="position:absolute;inset:0">
+      <path d="M 640 389 Q 910 211 1180 389" fill="none" stroke="var(--tick)" stroke-width="1.5" stroke-dasharray="2 8" />
+    </svg>
+  </div>
 
-    <!-- the ring light -->
-    <circle cx="260" cy="315" r="186" fill="none" stroke="url(#ring)" stroke-width="58" opacity="0.85" filter="url(#bloom)" />
-    <circle cx="260" cy="315" r="186" fill="none" stroke="url(#ring)" stroke-width="40" />
-    <circle cx="260" cy="315" r="206" fill="none" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1.5" />
-    <circle cx="260" cy="315" r="166" fill="none" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="1.5" />
-  </svg>
+  <div class="art v4">
+    <div class="beam"></div>
+    <div class="floor"></div>
+    <div class="screen"></div>
+    <div class="stand"></div>
+    <div class="base"></div>
+  </div>
+
+  <div class="art v5">
+    <div class="tile lit big photo"><img src="portrait/you.jpg" alt=""><span class="grade"></span><span class="nm">You</span></div>
+    <div class="tile s1"><span class="av">PR</span><span class="nm">Priya</span></div>
+    <div class="tile s2"><span class="av">LO</span><span class="nm">Leo</span></div>
+    <div class="tile s3"><span class="av">SA</span><span class="nm">Sam</span></div>
+    <div class="tile s4"><span class="av">MA</span><span class="nm">Maya</span></div>
+    <div class="tile s5"><span class="av">JO</span><span class="nm">Jon</span></div>
+  </div>
+
+  <div class="art v6">
+    <div class="win">
+      <div class="tile w1"><span class="av">PR</span><span class="nm">Priya</span></div>
+      <div class="tile w2"><span class="av">LO</span><span class="nm">Leo</span></div>
+      <div class="tile w3"><span class="av">SA</span><span class="nm">Sam</span></div>
+      <div class="tile lit w4"><span class="face"></span><span class="body"></span><span class="nm">You</span></div>
+    </div>
+    <div class="spill"></div>
+    <div class="pop"><i></i></div>
+    <div class="tag">pop-out light</div>
+  </div>
+
+  <div class="art v7">
+    <div class="tile split">
+      <div class="half before"><span class="face"></span><span class="body"></span></div>
+      <div class="half after tile lit"><span class="face"></span><span class="body"></span></div>
+      <span class="handle"></span>
+      <span class="lbl l">Before</span>
+      <span class="lbl r">With Glowy</span>
+    </div>
+  </div>
 
   <div class="copy">
     <div class="brand"><b>Glowy</b><span>glowy.t21.dev</span></div>
@@ -103,5 +197,25 @@ h1 em { font-style: normal; color: var(--warm); }
     <p class="sub">Your screen becomes a soft ring light. Free, in the browser, no gear to buy.</p>
     <div class="apps"><span>Zoom</span><span>Meet</span><span>Teams</span></div>
   </div>
+
+<script>
+  // Variant from the URL hash (#1–#4); default 1.
+  const v = location.hash.slice(1)
+  if (['1', '2', '3', '4', '5', '6', '7'].includes(v)) document.body.dataset.v = v
+
+  // Tone spectrum: place swatches on an arc (2700 K warm → 6500 K cool).
+  const tones = [['2700 K', '#FFA757'], ['3300 K', '#FFBB81'], ['4300 K', '#FFD5B3'], ['5200 K', '#FFE8D5'], ['6500 K', '#F2F8FF']]
+  const host = document.querySelector('.v3')
+  tones.forEach(([k, c], i) => {
+    // a shallow arc across the right half, highest in the middle
+    const x = 690 + i * 110
+    const y = 300 + 0.0009 * (x - 910) ** 2
+    const on = i === 2
+    const sw = document.createElement('span'); sw.className = 'sw' + (on ? ' on' : ''); sw.style.cssText = `left:${x}px;top:${y}px;--c:${c}`
+    const lb = document.createElement('span'); lb.className = 'k' + (on ? ' on' : ''); lb.textContent = k
+    lb.style.cssText = `left:${x}px;top:${y + (on ? 78 : 60)}px`
+    host.append(sw, lb)
+  })
+</script>
 </body>
 </html>
