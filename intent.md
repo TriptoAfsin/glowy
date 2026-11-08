@@ -1,0 +1,1 @@
+Plan for a small pwa mini app that gives different bg background say white that acts like a ring light for better camera face for meetings
