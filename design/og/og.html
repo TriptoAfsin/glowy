@@ -5,48 +5,103 @@
 <title>Glowy OG image</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <style>
-/* Source for public/og-image.png (1200×630). Render with: python scripts/render-og.py */
+/* Source for public/og-image.png (1200×630). Render with: python scripts/render-og.py
+   Layout: headline left; right, the product in one picture: a portrait lit by a ring light inside a kelvin dial. */
 :root {
-  --night: oklch(13% 0.03 262);
-  --night-2: oklch(18% 0.035 262);
-  --ink: oklch(96% 0.01 240);
+  --night: oklch(12.5% 0.03 262);
+  --night-2: oklch(19% 0.035 262);
+  --ink: oklch(97% 0.01 240);
   --ink-2: oklch(76% 0.025 245);
-  --ink-3: oklch(58% 0.03 250);
+  --ink-3: oklch(55% 0.03 250);
   --accent: oklch(82% 0.1 226);
-  --ring: oklch(97% 0.025 230);
-  --ring-glow: oklch(80% 0.1 232);
-  --warm: oklch(92% 0.08 85);
+  --warm: oklch(88% 0.11 78);
 }
 * { box-sizing: border-box; margin: 0; }
 html, body { width: 1200px; height: 630px; overflow: hidden; background: var(--night); }
 body { font-family: 'Geist', system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; position: relative; }
 .bg { position: absolute; inset: 0;
   background:
-    radial-gradient(520px 520px at 870px 315px, oklch(70% 0.12 235 / 0.28), transparent 70%),
-    radial-gradient(700px 400px at 0px 630px, oklch(40% 0.08 255 / 0.35), transparent 70%),
+    radial-gradient(560px 560px at 860px 315px, oklch(62% 0.13 240 / 0.30), transparent 70%),
+    radial-gradient(420px 300px at 1040px 520px, oklch(80% 0.1 75 / 0.12), transparent 70%),
+    radial-gradient(700px 420px at 0px 640px, oklch(38% 0.08 258 / 0.40), transparent 70%),
     var(--night); }
-/* The halo: the product's ring-light shape */
-.halo { position: absolute; left: 870px; top: 315px; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%;
-  background: radial-gradient(circle closest-side, var(--night) 0 54%, var(--ring-glow) 60%, var(--ring) 67% 84%, var(--warm) 90%, transparent 100%);
-  filter: blur(2px); }
-.sun { position: absolute; left: 870px; top: 315px; width: 210px; height: 210px; margin: -105px 0 0 -105px; }
-.copy { position: absolute; left: 80px; top: 0; bottom: 0; width: 560px; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
-.url { font: 500 20px 'Geist Mono', monospace; color: var(--accent); letter-spacing: 0.02em; }
-h1 { font: 600 132px/0.9 'Geist', sans-serif; letter-spacing: -0.06em; }
-.tag { font: 400 40px/1.15 'Geist', sans-serif; color: var(--ink-2); letter-spacing: -0.02em; text-wrap: balance; }
-.chips { display: flex; gap: 10px; margin-top: 10px; }
-.chips span { font: 500 18px 'Geist Mono', monospace; color: var(--ink-2); padding: 8px 14px; border-radius: 999px; background: var(--night-2); }
+.art { position: absolute; left: 600px; top: 0; width: 520px; height: 630px; }
+.copy { position: absolute; left: 76px; top: 0; bottom: 0; width: 520px; display: flex; flex-direction: column; justify-content: center; gap: 26px; }
+.brand { display: flex; align-items: baseline; gap: 14px; }
+.brand b { font: 600 30px 'Geist', sans-serif; letter-spacing: -0.03em; }
+.brand span { font: 500 18px 'Geist Mono', monospace; color: var(--ink-3); }
+h1 { font: 600 96px/0.95 'Geist', sans-serif; letter-spacing: -0.055em; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--warm); }
+.sub { font: 400 28px/1.3 'Geist', sans-serif; color: var(--ink-2); letter-spacing: -0.015em; max-width: 470px; }
+.apps { display: flex; gap: 10px; }
+.apps span { font: 500 17px 'Geist Mono', monospace; color: var(--ink-2); padding: 8px 14px; border-radius: 999px; background: var(--night-2); }
 </style>
 </head>
 <body>
   <div class="bg"></div>
-  <div class="halo"></div>
-  <img class="sun" src="../../src/assets/blue-sun.svg" alt="">
+
+  <svg class="art" viewBox="0 0 520 630" aria-hidden="true">
+    <defs>
+      <!-- ring: warm at the top-left, ice blue at the bottom-right (the app's 2700 K → 6500 K range) -->
+      <linearGradient id="ring" x1="0.1" y1="0" x2="0.9" y2="1">
+        <stop offset="0" stop-color="#FFE3A8" />
+        <stop offset="0.45" stop-color="#FFF8EE" />
+        <stop offset="1" stop-color="#BFE4FF" />
+      </linearGradient>
+      <filter id="bloom" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="26" /></filter>
+      <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" /></filter>
+      <!-- the light falling on the face from the ring -->
+      <!-- the light falling on the person: brightest on the face, fading down the shoulders -->
+      <radialGradient id="facelight" cx="50%" cy="22%" r="58%">
+        <stop offset="0" stop-color="#FFF3E0" stop-opacity="1" />
+        <stop offset="0.28" stop-color="#F6DCC2" stop-opacity="0.85" />
+        <stop offset="0.62" stop-color="#8E8FB0" stop-opacity="0.35" />
+        <stop offset="1" stop-color="#1A2340" stop-opacity="0" />
+      </radialGradient>
+      <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3B4672" />
+        <stop offset="1" stop-color="#141C38" />
+      </linearGradient>
+      <radialGradient id="aura" r="50%">
+        <stop offset="0" stop-color="#FFE9C9" stop-opacity="0.55" />
+        <stop offset="1" stop-color="#FFE9C9" stop-opacity="0" />
+      </radialGradient>
+      <path id="person" d="M260 206 C 298 206 320 234 320 272 C 320 300 310 322 297 337 C 293 342 291 349 291 357 L 291 370 C 291 382 299 390 313 394 C 360 406 398 430 414 482 L 414 520 L 106 520 L 106 482 C 122 430 160 406 207 394 C 221 390 229 382 229 370 L 229 357 C 229 349 227 342 223 337 C 210 322 200 300 200 272 C 200 234 222 206 260 206 Z" />
+      <clipPath id="inside"><circle cx="260" cy="315" r="160" /></clipPath>
+    </defs>
+
+    <!-- kelvin dial around the ring -->
+    <circle cx="260" cy="315" r="236" fill="none" stroke="#5B6B8C" stroke-opacity="0.55" stroke-width="10"
+      stroke-dasharray="1.5 11.85" transform="rotate(-90 260 315)" />
+    <circle cx="260" cy="315" r="236" fill="none" stroke="#8FA3C7" stroke-opacity="0.8" stroke-width="16"
+      stroke-dasharray="2 72.1" transform="rotate(-90 260 315)" />
+    <text x="78" y="88" fill="#FFD98A" font-family="Geist Mono, monospace" font-size="17" font-weight="500">2700 K</text>
+    <text x="378" y="560" fill="#A9D8FF" font-family="Geist Mono, monospace" font-size="17" font-weight="500">6500 K</text>
+
+    <!-- inner darkness + portrait -->
+    <circle cx="260" cy="315" r="164" fill="#0E1530" />
+    <g clip-path="url(#inside)">
+      <circle cx="260" cy="315" r="164" fill="#16204A" opacity="0.6" />
+      <!-- warm spill on the wall behind the head -->
+      <ellipse cx="260" cy="270" rx="120" ry="120" fill="url(#aura)" />
+      <!-- one continuous head-and-shoulders silhouette -->
+      <use href="#person" fill="url(#body)" />
+      <!-- soft key light from the ring falling on the face -->
+      <use href="#person" fill="url(#facelight)" />
+    </g>
+
+    <!-- the ring light -->
+    <circle cx="260" cy="315" r="186" fill="none" stroke="url(#ring)" stroke-width="58" opacity="0.85" filter="url(#bloom)" />
+    <circle cx="260" cy="315" r="186" fill="none" stroke="url(#ring)" stroke-width="40" />
+    <circle cx="260" cy="315" r="206" fill="none" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1.5" />
+    <circle cx="260" cy="315" r="166" fill="none" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="1.5" />
+  </svg>
+
   <div class="copy">
-    <div class="url">glowy.t21.dev</div>
-    <h1>Glowy</h1>
-    <p class="tag">Soft, flattering light for your video calls.</p>
-    <div class="chips"><span>tones</span><span>glows</span><span>halo</span><span>pop-out</span></div>
+    <div class="brand"><b>Glowy</b><span>glowy.t21.dev</span></div>
+    <h1>Glow on <em>every</em> call.</h1>
+    <p class="sub">Your screen becomes a soft ring light. Free, in the browser, no gear to buy.</p>
+    <div class="apps"><span>Zoom</span><span>Meet</span><span>Teams</span></div>
   </div>
 </body>
 </html>
