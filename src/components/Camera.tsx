@@ -25,10 +25,12 @@ const SIZE = 168
 /** A small draggable round mirror, so you can check your face while you adjust the light. */
 export function Mirror({
   camera,
+  closing,
   onClose,
   onExpand,
 }: {
   camera: CameraState
+  closing?: boolean
   onClose: () => void
   onExpand: () => void
 }) {
@@ -58,6 +60,7 @@ export function Mirror({
     <div
       className="mirror"
       data-dragging={dragging}
+      data-closing={closing || undefined}
       style={{ '--x': pos.x, '--y': pos.y } as CSSProperties}
       onPointerDown={onDown}
       onPointerMove={onMove}

@@ -70,12 +70,20 @@
   --shadow-dock: 0 30px 60px -28px var(--color-shadow);
 
   /* Motion */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* strong ease-out: entering / exiting UI */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* strong ease-in-out: things moving on screen */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* iOS-like sheet curve: the dock morph */
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* only Sunny's save hop */
-  --dur-micro: 120ms;
-  --dur-short: 220ms;
-  --dur-long: 420ms;
+  --dur-press: 120ms; /* press feedback */
+  --dur-micro: 160ms; /* swatch ring, colour */
+  --dur-short: 220ms; /* tab indicator, content swap */
+  --dur-modal: 260ms; /* modal, mirror */
+  --dur-morph: 340ms; /* dock ⇄ pill */
+  --dur-long: 420ms; /* idle hide / show */
   --dur-light: 900ms; /* light crossfades: slow enough never to flash on camera */
+  --stagger: 35ms;
+
+  /* Motion distances (zeroed under reduced motion) */
+  --rise: 6px;
+  --pop: 0.94;
 }

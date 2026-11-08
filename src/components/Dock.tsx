@@ -1,5 +1,5 @@
-import { ChevronDown, ChevronUp, X } from 'lucide-react'
-import type { CSSProperties, MouseEvent } from 'react'
+import { Check, ChevronDown, ChevronUp, X } from 'lucide-react'
+import { type CSSProperties, type MouseEvent, useState } from 'react'
 import {
   KELVIN_MAX,
   KELVIN_MIN,
@@ -22,6 +22,7 @@ export interface Preset {
 }
 
 export const MAX_PRESETS = 8
+const EXIT_MS = 160
 
 interface DockProps {
   look: Look
@@ -30,6 +31,7 @@ interface DockProps {
   onTab: (t: LookTab) => void
   presets: Preset[]
   onSave: (e: MouseEvent<HTMLButtonElement>) => void
+  justSaved: boolean
   onApply: (p: Preset) => void
   onDelete: (id: string) => void
   onPreview: () => void
@@ -51,17 +53,30 @@ const sameLook = (a: Look, b: Look) =>
   a.brightness === b.brightness &&
   (a.source === 'scene' ? a.sceneId === b.sceneId : a.kelvin === b.kelvin && a.blush === b.blush)
 
+/** Stagger index for a swatch's entrance. */
+const at = (i: number, extra: Record<string, string> = {}) => ({ '--i': i, ...extra }) as CSSProperties
+
 /** The A1 "instrument strip": look · colour · output · actions, with a minimised pill state. */
 export function Dock(p: DockProps) {
   const { look, setLook } = p
   const [a, b] = lookSwatch(look)
+  const [removing, setRemoving] = useState<string[]>([])
+  const name = lookName(look)
   const meta = `${look.source === 'scene' ? 'glow' : 'tone'} · ${look.shape}`
+
+  const remove = (id: string) => {
+    setRemoving((r) => [...r, id])
+    window.setTimeout(() => {
+      p.onDelete(id)
+      setRemoving((r) => r.filter((x) => x !== id))
+    }, EXIT_MS)
+  }
 
   if (p.minimised) {
     return (
       <section className="dock dock--min chrome" aria-label="Light controls, minimised">
         <span className="sw sw--static" style={{ '--a': a, '--b': b } as CSSProperties} aria-hidden="true" />
-        <span className="dock-min__name">{lookName(look)}</span>
+        <span className="dock-min__name">{name}</span>
         <span className="dock-min__val mono">{look.brightness}%</span>
         <IconButton className="ghost-icon" label="Show controls" shortcut="M" onClick={() => p.onMinimise(false)}>
           <ChevronUp size={18} aria-hidden />
@@ -93,43 +108,45 @@ export function Dock(p: DockProps) {
           />
         </div>
 
-        <div className="swatches" role="radiogroup" aria-label={p.tab === 'saved' ? 'Saved looks' : 'Looks'}>
+        {/* keyed by tab: the new set fades up with a short stagger */}
+        <div className="swatches" key={p.tab} role="radiogroup" aria-label={p.tab === 'saved' ? 'Saved looks' : 'Looks'}>
           {p.tab === 'tone' &&
-            TONES.map((t) => (
+            TONES.map((t, i) => (
               <button
                 key={t.id}
                 type="button"
                 role="radio"
-                className="sw"
+                className="sw enter"
                 aria-label={t.name}
                 title={t.name}
                 aria-checked={look.source === 'tone' && look.kelvin === t.kelvin && look.blush === t.blush}
-                style={{ '--a': toneColor(t.kelvin, t.blush), '--b': toneColor(t.kelvin, t.blush) } as CSSProperties}
+                style={at(i, { '--a': toneColor(t.kelvin, t.blush), '--b': toneColor(t.kelvin, t.blush) })}
                 onClick={() => setLook({ source: 'tone', kelvin: t.kelvin, blush: t.blush })}
               />
             ))}
           {p.tab === 'glow' &&
-            SCENES.map((s) => (
+            SCENES.map((s, i) => (
               <button
                 key={s.id}
                 type="button"
                 role="radio"
-                className="sw"
+                className="sw enter"
                 aria-label={s.name}
                 title={s.name}
                 aria-checked={look.source === 'scene' && look.sceneId === s.id}
-                style={{ '--a': s.blobs[0], '--b': s.blobs[1] } as CSSProperties}
+                style={at(i, { '--a': s.blobs[0], '--b': s.blobs[1] })}
                 onClick={() => setLook({ source: 'scene', sceneId: s.id })}
               />
             ))}
           {p.tab === 'saved' &&
             (p.presets.length === 0 ? (
-              <p className="empty">Tap Save look to keep the current light here.</p>
+              <p className="empty enter">Tap Save look to keep the current light here.</p>
             ) : (
-              p.presets.map((pr) => {
+              p.presets.map((pr, i) => {
                 const [pa, pb] = lookSwatch(pr.look)
+                const leaving = removing.includes(pr.id)
                 return (
-                  <span key={pr.id} className="saved">
+                  <span key={pr.id} className="saved enter" data-leaving={leaving} style={at(i)}>
                     <button
                       type="button"
                       role="radio"
@@ -144,7 +161,8 @@ export function Dock(p: DockProps) {
                       type="button"
                       className="saved__x"
                       aria-label={`Delete ${lookName(pr.look)}`}
-                      onClick={() => p.onDelete(pr.id)}
+                      onClick={() => remove(pr.id)}
+                      disabled={leaving}
                     >
                       <X size={10} aria-hidden />
                     </button>
@@ -155,63 +173,67 @@ export function Dock(p: DockProps) {
         </div>
 
         <div className="zone__name">
-          <b>{lookName(look)}</b>
+          <b key={name} className="fade">
+            {name}
+          </b>
           <span className="mono">{meta}</span>
         </div>
       </div>
 
-      {/* ── Colour ── */}
+      {/* ── Colour (keyed: Temperature ⇄ Drift swap) ── */}
       <div className="zone">
-        {look.source === 'tone' ? (
-          <>
-            <div className="zone__head">
-              <h2>Temperature</h2>
-            </div>
-            <div className="readout">
-              <b className="mono">{look.kelvin}</b>
-              <span className="mono">K</span>
-            </div>
-            <Slider
-              label="Warmth"
-              ticks
-              value={KELVIN_MAX + KELVIN_MIN - look.kelvin}
-              min={KELVIN_MIN}
-              max={KELVIN_MAX}
-              step={50}
-              valueText={`${look.kelvin} kelvin`}
-              track={`linear-gradient(90deg, ${toneColor(KELVIN_MAX, 0)}, ${toneColor(KELVIN_MIN, 0)})`}
-              onChange={(v) => setLook({ source: 'tone', kelvin: KELVIN_MAX + KELVIN_MIN - v })}
-            />
-            <Slider
-              label="Blush"
-              mini={{ display: `${look.blush}%` }}
-              value={look.blush}
-              min={0}
-              max={100}
-              onChange={(blush) => setLook({ source: 'tone', blush })}
-            />
-          </>
-        ) : (
-          <>
-            <div className="zone__head">
-              <h2>Drift</h2>
-            </div>
-            <div className="readout">
-              <b className="mono">{DRIFT_WORDS[String(look.drift)] ?? `${look.drift}×`}</b>
-            </div>
-            <Slider
-              label="Drift speed"
-              ticks
-              value={look.drift}
-              min={0.5}
-              max={2}
-              step={0.25}
-              valueText={DRIFT_WORDS[String(look.drift)]}
-              onChange={(drift) => setLook({ drift })}
-            />
-            <p className="zone__hint">{sceneById(look.sceneId).name} moves slowly enough not to flicker on camera.</p>
-          </>
-        )}
+        <div className="swap" key={look.source}>
+          {look.source === 'tone' ? (
+            <>
+              <div className="zone__head">
+                <h2>Temperature</h2>
+              </div>
+              <div className="readout">
+                <b className="mono">{look.kelvin}</b>
+                <span className="mono">K</span>
+              </div>
+              <Slider
+                label="Warmth"
+                ticks
+                value={KELVIN_MAX + KELVIN_MIN - look.kelvin}
+                min={KELVIN_MIN}
+                max={KELVIN_MAX}
+                step={50}
+                valueText={`${look.kelvin} kelvin`}
+                track={`linear-gradient(90deg, ${toneColor(KELVIN_MAX, 0)}, ${toneColor(KELVIN_MIN, 0)})`}
+                onChange={(v) => setLook({ source: 'tone', kelvin: KELVIN_MAX + KELVIN_MIN - v })}
+              />
+              <Slider
+                label="Blush"
+                mini={{ display: `${look.blush}%` }}
+                value={look.blush}
+                min={0}
+                max={100}
+                onChange={(blush) => setLook({ source: 'tone', blush })}
+              />
+            </>
+          ) : (
+            <>
+              <div className="zone__head">
+                <h2>Drift</h2>
+              </div>
+              <div className="readout">
+                <b className="mono">{DRIFT_WORDS[String(look.drift)] ?? `${look.drift}×`}</b>
+              </div>
+              <Slider
+                label="Drift speed"
+                ticks
+                value={look.drift}
+                min={0.5}
+                max={2}
+                step={0.25}
+                valueText={DRIFT_WORDS[String(look.drift)]}
+                onChange={(drift) => setLook({ drift })}
+              />
+              <p className="zone__hint">{sceneById(look.sceneId).name} moves slowly enough not to flicker on camera.</p>
+            </>
+          )}
+        </div>
       </div>
 
       {/* ── Output ── */}
@@ -234,14 +256,16 @@ export function Dock(p: DockProps) {
         />
         <Segmented<Shape> label="Shape" value={look.shape} onChange={(shape) => setLook({ shape })} options={SHAPES} />
         {look.shape !== 'fill' && (
-          <Slider
-            label="Width"
-            mini={{ display: String(look.shapeSize) }}
-            value={look.shapeSize}
-            min={10}
-            max={45}
-            onChange={(shapeSize) => setLook({ shapeSize })}
-          />
+          <div className="swap">
+            <Slider
+              label="Width"
+              mini={{ display: String(look.shapeSize) }}
+              value={look.shapeSize}
+              min={10}
+              max={45}
+              onChange={(shapeSize) => setLook({ shapeSize })}
+            />
+          </div>
         )}
       </div>
 
@@ -253,12 +277,18 @@ export function Dock(p: DockProps) {
         <div className="go-row">
           <button
             type="button"
-            className="btn btn--ghost"
+            className="btn btn--ghost btn--save"
+            data-saved={p.justSaved}
             onClick={p.onSave}
-            disabled={p.presets.length >= MAX_PRESETS}
+            disabled={p.presets.length >= MAX_PRESETS && !p.justSaved}
             title={p.presets.length >= MAX_PRESETS ? `You can keep up to ${MAX_PRESETS} looks` : undefined}
           >
-            {p.presets.length >= MAX_PRESETS ? 'List full' : 'Save look'}
+            <span className="btn__label" aria-hidden={p.justSaved}>
+              {p.presets.length >= MAX_PRESETS ? 'List full' : 'Save look'}
+            </span>
+            <span className="btn__label btn__label--done" aria-hidden={!p.justSaved}>
+              <Check size={16} aria-hidden /> Saved
+            </span>
           </button>
           <IconButton className="btn btn--ghost btn--icon" label="Minimise controls" shortcut="M" onClick={() => p.onMinimise(true)}>
             <ChevronDown size={18} aria-hidden />

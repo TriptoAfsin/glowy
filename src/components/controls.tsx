@@ -70,8 +70,18 @@ export function Segmented<T extends string>({ label, value, options, onChange, v
     onChange(options[next].value)
     refs.current[next]?.focus({ preventScroll: true })
   }
+  const index = Math.max(
+    0,
+    options.findIndex((o) => o.value === value),
+  )
   return (
-    <div className={`seg seg--${variant}`} role="radiogroup" aria-label={label}>
+    <div
+      className={`seg seg--${variant}`}
+      role="radiogroup"
+      aria-label={label}
+      style={{ '--count': options.length, '--index': index } as CSSProperties}
+    >
+      <span className="seg__thumb" aria-hidden="true" />
       {options.map((o, i) => (
         <button
           key={o.value}

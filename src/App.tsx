@@ -1,5 +1,6 @@
 import { Camera, EyeOff, Maximize, Minimize, PictureInPicture2, Video } from 'lucide-react'
-import { type MouseEvent, useCallback, useEffect, useState } from 'react'
+import { type MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { Mirror } from './components/Camera'
 import { IconButton } from './components/controls'
 import { Dock, type LookTab, MAX_PRESETS, type Preset } from './components/Dock'
@@ -9,6 +10,7 @@ import { PipLight } from './components/PipLight'
 import { Sunny } from './components/Sunny'
 import { isTouch, useCamera, useFullscreen, useIdle, useWakeLock } from './hooks/useDevice'
 import { usePip } from './hooks/usePip'
+import { prefersReducedMotion, usePresence } from './hooks/usePresence'
 import { DEFAULT_LOOK, type Look, SCENES, TONES } from './lib/light'
 import { usePersisted } from './lib/persist'
 
@@ -23,8 +25,29 @@ export default function App() {
   const [dockHover, setDockHover] = useState(false)
   const [cheer, setCheer] = useState(0)
   const [touch] = useState(isTouch)
+  const [justSaved, setJustSaved] = useState(false)
+  const [booting, setBooting] = useState(true)
+  const savedTimer = useRef<number | undefined>(undefined)
+  const mirror = usePresence(mirrorOn, 180)
+  const tip = usePresence(!tipSeen, 200)
 
-  const camera = useCamera(mirrorOn || previewOpen)
+  // The first-load stagger plays once; afterwards the dock re-mounts (expand) without it.
+  useEffect(() => {
+    const t = window.setTimeout(() => setBooting(false), 1200)
+    return () => window.clearTimeout(t)
+  }, [])
+
+  /** Dock ⇄ pill. Pointer-initiated toggles morph with a view transition; the M shortcut stays instant. */
+  const setDockMinimised = useCallback(
+    (m: boolean) => {
+      const run = () => flushSync(() => setMinimised(m))
+      if (document.startViewTransition && !prefersReducedMotion()) document.startViewTransition(run)
+      else run()
+    },
+    [setMinimised],
+  )
+
+  const camera = useCamera(mirror.mounted || previewOpen)
   const { idle, hideNow } = useIdle(3500, previewOpen || dockHover)
   const wake = useWakeLock()
   const fs = useFullscreen()
@@ -100,10 +123,13 @@ export default function App() {
     setPresets((ps) => [{ id: crypto.randomUUID(), look }, ...ps])
     setCheer((c) => c + 1)
     setTab('saved')
+    setJustSaved(true)
+    window.clearTimeout(savedTimer.current)
+    savedTimer.current = window.setTimeout(() => setJustSaved(false), 1400)
   }
 
   return (
-    <div className="app" data-ui={idle ? 'hidden' : 'shown'}>
+    <div className="app" data-ui={idle ? 'hidden' : 'shown'} data-booting={booting || undefined}>
       <LightStage look={look} />
 
       <header className="topbar">
@@ -146,8 +172,8 @@ export default function App() {
         </nav>
       </header>
 
-      {!tipSeen && (
-        <aside className="tip chrome" role="note">
+      {tip.mounted && (
+        <aside className="tip chrome" role="note" data-closing={tip.closing || undefined}>
           <p>
             <strong>Turn your screen brightness all the way up.</strong> Glowy can only be as bright as your display.
           </p>
@@ -172,18 +198,24 @@ export default function App() {
           onTab={setTab}
           presets={presets}
           onSave={save}
+          justSaved={justSaved}
           onApply={(pr) => {
             setLookState(pr.look)
           }}
           onDelete={(id) => setPresets((ps) => ps.filter((x) => x.id !== id))}
           onPreview={() => setPreviewOpen(true)}
           minimised={minimised}
-          onMinimise={setMinimised}
+          onMinimise={setDockMinimised}
         />
       </div>
 
-      {mirrorOn && (
-        <Mirror camera={camera} onClose={() => setMirrorOn(false)} onExpand={() => setPreviewOpen(true)} />
+      {mirror.mounted && (
+        <Mirror
+          camera={camera}
+          closing={mirror.closing}
+          onClose={() => setMirrorOn(false)}
+          onExpand={() => setPreviewOpen(true)}
+        />
       )}
 
       <MeetingPreview open={previewOpen} onClose={() => setPreviewOpen(false)} camera={camera} look={look} />
