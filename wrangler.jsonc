@@ -3,6 +3,10 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "glowy",
   "compatibility_date": "2026-10-01",
+  // Build before every deploy, so `npx wrangler deploy` alone works (e.g. in Cloudflare's Git builds).
+  "build": {
+    "command": "npm run build"
+  },
   "assets": {
     "directory": "./dist",
     // Any unknown path serves index.html (single-page app).

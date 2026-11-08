@@ -88,11 +88,11 @@ The camera and wake lock need a secure context: `localhost` works, and any deplo
 
 ### Deploy to Cloudflare Workers
 
-Glowy deploys as static assets on Cloudflare Workers; there is no Worker script. `wrangler.jsonc` points at `dist/` and serves `index.html` for unknown paths. `public/_headers` stops the service worker and manifest from being cached and caches hashed assets for a year.
+Glowy deploys as static assets on Cloudflare Workers; there is no Worker script. `wrangler.jsonc` runs `npm run build` before every deploy, points at `dist/` and serves `index.html` for unknown paths. That means a plain `npx wrangler deploy` works, including in Cloudflare's Git-connected builds, with no separate build command needed. `public/_headers` stops the service worker and manifest from being cached and caches hashed assets for a year.
 
 ```bash
 npx wrangler login   # once
-npm run deploy       # build + wrangler deploy
+npm run deploy       # builds, then deploys
 ```
 
 Your app is then live at `https://glowy.<your-subdomain>.workers.dev`. Add a custom domain from the Cloudflare dashboard if you like. Workers always serve over https, which the camera, wake lock and install prompt need.
