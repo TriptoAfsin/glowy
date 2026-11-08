@@ -13,10 +13,13 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icon.svg', 'apple-touch-icon-180x180.png'],
       manifest: {
-        name: 'Glowy · soft light for video calls',
+        id: '/',
+        name: 'Glowy · soft ring light for video calls',
         short_name: 'Glowy',
         description:
-          'Turn any screen into a soft, flattering light for video calls. Warm tones, slow golden glows, halo and edge shapes.',
+          'Turn any screen into a soft, flattering ring light for video calls. Warm tones, slow golden glows, halo and edge shapes, and a pop-out light.',
+        lang: 'en',
+        dir: 'ltr',
         theme_color: '#0F1729',
         background_color: '#0F1729',
         display: 'standalone',
@@ -30,10 +33,17 @@ export default defineConfig({
           { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
           { src: 'maskable-icon-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
+        // Shown in richer install dialogs (Chrome, Edge, Android).
+        screenshots: [
+          { src: 'screenshots/wide.png', sizes: '1280x800', type: 'image/png', form_factor: 'wide', label: 'The Clear sky glow with the instrument dock' },
+          { src: 'screenshots/narrow.png', sizes: '390x844', type: 'image/png', form_factor: 'narrow', label: 'Glowy on a phone with the Golden tone' },
+        ],
       },
       workbox: {
         // Only the latin font subsets are precached; other subsets load on demand.
         globPatterns: ['**/*.{js,css,html,svg,png,webmanifest}', '**/*latin-*.woff2'],
+        // Share and install images are for crawlers and install dialogs, not for offline use.
+        globIgnores: ['og-image.png', 'screenshots/**', 'icon-256.png'],
       },
     }),
   ],

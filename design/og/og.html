@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Glowy OG image</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Source for public/og-image.png (1200×630). Render with: python scripts/render-og.py */
+:root {
+  --night: oklch(13% 0.03 262);
+  --night-2: oklch(18% 0.035 262);
+  --ink: oklch(96% 0.01 240);
+  --ink-2: oklch(76% 0.025 245);
+  --ink-3: oklch(58% 0.03 250);
+  --accent: oklch(82% 0.1 226);
+  --ring: oklch(97% 0.025 230);
+  --ring-glow: oklch(80% 0.1 232);
+  --warm: oklch(92% 0.08 85);
+}
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1200px; height: 630px; overflow: hidden; background: var(--night); }
+body { font-family: 'Geist', system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; position: relative; }
+.bg { position: absolute; inset: 0;
+  background:
+    radial-gradient(520px 520px at 870px 315px, oklch(70% 0.12 235 / 0.28), transparent 70%),
+    radial-gradient(700px 400px at 0px 630px, oklch(40% 0.08 255 / 0.35), transparent 70%),
+    var(--night); }
+/* The halo: the product's ring-light shape */
+.halo { position: absolute; left: 870px; top: 315px; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%;
+  background: radial-gradient(circle closest-side, var(--night) 0 54%, var(--ring-glow) 60%, var(--ring) 67% 84%, var(--warm) 90%, transparent 100%);
+  filter: blur(2px); }
+.sun { position: absolute; left: 870px; top: 315px; width: 210px; height: 210px; margin: -105px 0 0 -105px; }
+.copy { position: absolute; left: 80px; top: 0; bottom: 0; width: 560px; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+.url { font: 500 20px 'Geist Mono', monospace; color: var(--accent); letter-spacing: 0.02em; }
+h1 { font: 600 132px/0.9 'Geist', sans-serif; letter-spacing: -0.06em; }
+.tag { font: 400 40px/1.15 'Geist', sans-serif; color: var(--ink-2); letter-spacing: -0.02em; text-wrap: balance; }
+.chips { display: flex; gap: 10px; margin-top: 10px; }
+.chips span { font: 500 18px 'Geist Mono', monospace; color: var(--ink-2); padding: 8px 14px; border-radius: 999px; background: var(--night-2); }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="halo"></div>
+  <img class="sun" src="../../src/assets/blue-sun.svg" alt="">
+  <div class="copy">
+    <div class="url">glowy.t21.dev</div>
+    <h1>Glowy</h1>
+    <p class="tag">Soft, flattering light for your video calls.</p>
+    <div class="chips"><span>tones</span><span>glows</span><span>halo</span><span>pop-out</span></div>
+  </div>
+</body>
+</html>

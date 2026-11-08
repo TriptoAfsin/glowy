@@ -9,6 +9,15 @@
   Cache-Control: no-cache
   Content-Type: application/manifest+json
 
+# Share image and SEO files: cache for a day so updates still reach crawlers.
+/og-image.png
+  Cache-Control: public, max-age=86400
+/robots.txt
+  Cache-Control: public, max-age=86400
+/sitemap.xml
+  Cache-Control: public, max-age=86400
+  Content-Type: application/xml
+
 # Hashed build files never change.
 /assets/*
   Cache-Control: public, max-age=31536000, immutable

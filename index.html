@@ -3,17 +3,85 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Glowy</title>
-    <meta name="description" content="Turn any screen into a soft, flattering light for video calls." />
+
+    <!-- Primary -->
+    <title>Glowy · Soft ring light for video calls</title>
+    <meta
+      name="description"
+      content="Turn any screen into a soft, flattering ring light for Zoom, Meet and Teams. Warm tones, slow golden glows, halo and edge shapes, and a pop-out light. Free, private, works offline."
+    />
+    <meta name="application-name" content="Glowy" />
+    <meta name="author" content="Tripto Afsin" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://glowy.t21.dev/" />
     <meta name="theme-color" content="#0F1729" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Glowy" />
+    <meta property="og:url" content="https://glowy.t21.dev/" />
+    <meta property="og:title" content="Glowy · Soft ring light for video calls" />
+    <meta
+      property="og:description"
+      content="Turn any screen into a soft, flattering ring light for your video calls. Warm tones, golden glows, halo shapes and a pop-out light."
+    />
+    <meta property="og:image" content="https://glowy.t21.dev/og-image.png" />
+    <meta property="og:image:secure_url" content="https://glowy.t21.dev/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Glowy: a smiling blue sun inside a glowing ring light, with the tagline Soft, flattering light for your video calls." />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- X / Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Glowy · Soft ring light for video calls" />
+    <meta
+      name="twitter:description"
+      content="Turn any screen into a soft, flattering ring light for your video calls."
+    />
+    <meta name="twitter:image" content="https://glowy.t21.dev/og-image.png" />
+    <meta name="twitter:image:alt" content="Glowy: a smiling blue sun inside a glowing ring light." />
+
+    <!-- App / install -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Glowy" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/pwa-64x64.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Glowy",
+        "url": "https://glowy.t21.dev/",
+        "description": "Turn any screen into a soft, flattering ring light for video calls. Warm tones, slow glows, halo and edge shapes, a camera mirror, a meeting preview and a pop-out light.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Windows, macOS, Linux, ChromeOS, Android, iOS",
+        "browserRequirements": "Requires a modern browser. Pop-out light works best in Chrome or Edge.",
+        "image": "https://glowy.t21.dev/og-image.png",
+        "screenshot": "https://glowy.t21.dev/screenshots/wide.png",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Tripto Afsin" },
+        "featureList": [
+          "Calibrated tones from 2700 K to 6500 K",
+          "Slow animated glows that don't flicker on camera",
+          "Fill, halo and edge light shapes",
+          "Camera mirror and meeting preview",
+          "Picture-in-picture pop-out light",
+          "Keeps the screen awake, works offline"
+        ]
+      }
+    </script>
   </head>
   <body>
+    <noscript>Glowy needs JavaScript to turn your screen into a light.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

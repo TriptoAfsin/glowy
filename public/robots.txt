@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://glowy.t21.dev/sitemap.xml

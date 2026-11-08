@@ -82,6 +82,7 @@ npm run dev       # http://localhost:5173
 npm run build     # typecheck + production build in dist/
 npm run preview   # serve the production build
 npm run icons     # rebuild every icon from scripts/build-icons.mjs
+python scripts/render-og.py   # re-render the share image from design/og/og.html (needs Playwright)
 ```
 
 The camera and wake lock need a secure context: `localhost` works, and any deployed copy must be served over **https**.
@@ -133,6 +134,10 @@ public/_headers            cache + security headers for Cloudflare
 design/icons/              icon mockups (three rounds)
 design/ui/                 UI mockups; v2/ holds the atmospheric directions (A1 shipped)
 ```
+
+## Sharing and search
+
+Links to `https://glowy.t21.dev` unfurl with a 1200×630 share image (`public/og-image.png`, rendered from `design/og/og.html`). `index.html` carries the title, description, canonical URL, Open Graph and X card tags, plus `WebApplication` structured data. `robots.txt` and `sitemap.xml` sit in `public/`, and the PWA manifest includes install screenshots for richer install dialogs. If the domain changes, update the URLs in `index.html`, `public/robots.txt`, `public/sitemap.xml` and `design/og/og.html`.
 
 ## Design
 
