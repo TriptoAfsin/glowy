@@ -1,0 +1,81 @@
+/* Hallmark · genre: atmospheric · layout: A1 instrument strip (bottom dock, minimisable) · theme: Midnight, blue-sunshine tune · nav: N9 edge-aligned pills · footer: none (app)
+ * tone: premium, technical, calm · anchor hue: 262 (night blue) · accent: ice blue 230 · display: Geist 600 · numerals: Geist Mono
+ * Light colours (tones, glows) are product content and live in src/lib/light.ts, not here.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Chrome: night-blue instrument surfaces */
+  --color-paper: oklch(15% 0.025 262);
+  --color-paper-2: oklch(20% 0.03 262);
+  --color-paper-3: oklch(25% 0.035 262);
+  --color-paper-4: oklch(30% 0.04 262);
+  --color-ink: oklch(95% 0.01 240);
+  --color-ink-2: oklch(74% 0.02 245);
+  --color-ink-3: oklch(56% 0.025 250);
+  --color-hairline: oklch(100% 0 0 / 0.12);
+
+  /* One accent: ice blue. Warm/cool only paint the temperature track. */
+  --color-accent: oklch(80% 0.11 230);
+  --color-accent-hover: oklch(85% 0.1 230);
+  --color-accent-ink: oklch(18% 0.04 255);
+  --color-focus: oklch(80% 0.11 230);
+  --color-live: oklch(78% 0.14 155);
+  --color-danger: oklch(72% 0.16 25);
+
+  /* The dark used to shape and dim the light */
+  --color-night: oklch(13% 0.012 250);
+  --color-night-90: oklch(13% 0.012 250 / 0.9);
+  --color-scrim: oklch(8% 0.02 262 / 0.55);
+  --color-shadow: oklch(8% 0.02 262 / 0.55);
+
+  /* Meeting preview */
+  --color-call-bg: oklch(22% 0.02 262);
+  --color-call-figure: oklch(30% 0.025 262);
+  --color-call-tag: oklch(12% 0.02 262 / 0.72);
+  --color-call-text: oklch(84% 0.02 240);
+  --color-light-sample: oklch(95% 0.03 230);
+
+  /* Type */
+  --font-display: 'Geist Variable', 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-display);
+  --font-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.875rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-readout: 1.875rem;
+
+  /* Space (4 pt) */
+  --space-3xs: 2px;
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Shape */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-zone: 18px;
+  --radius-dock: 24px;
+  --radius-pill: 999px;
+
+  --shadow-float: 0 12px 30px -14px var(--color-shadow);
+  --shadow-dock: 0 30px 60px -28px var(--color-shadow);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* only Sunny's save hop */
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+  --dur-light: 900ms; /* light crossfades: slow enough never to flash on camera */
+}
