@@ -1,0 +1,83 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A4 Day sheet</title><link rel="stylesheet" href="base.css">
+<style>
+/* Hallmark · genre: atmospheric · layout: left spec-sheet panel · theme: Bloom (light paper, blue-sunshine tune) · nav: N2 floating chip · pre-emit critique: P4 H5 E4 S4 R5 V4 */
+:root{
+  --color-paper: oklch(98.5% 0.006 240);
+  --color-paper-2: oklch(96% 0.01 240);
+  --color-paper-3: oklch(92% 0.016 240);
+  --color-rule: oklch(90% 0.015 240);
+  --color-ink: oklch(21% 0.035 258);
+  --color-ink-2: oklch(45% 0.03 255);
+  --color-ink-3: oklch(60% 0.025 250);
+  --color-accent: oklch(55% 0.15 252);
+  --color-accent-ink: oklch(98% 0.01 240);
+  --color-warm: oklch(86% 0.12 75);
+  --color-cool: oklch(88% 0.06 240);
+  --color-shadow: oklch(35% 0.08 255 / 0.22);
+  --light-a: oklch(96% 0.06 92);
+  --light-b: oklch(90% 0.06 232);
+  --light-c: oklch(95% 0.03 230);
+}
+.stage{background:radial-gradient(60% 70% at 72% 28%, var(--light-a), transparent 70%),radial-gradient(70% 70% at 30% 100%, var(--light-b), transparent 70%),var(--light-c)}
+.chip{position:fixed;top:20px;right:20px;display:flex;align-items:center;gap:4px;padding:4px;border-radius:14px;background:var(--color-paper);color:var(--color-ink-2);box-shadow:0 10px 30px -14px var(--color-shadow)}
+.chip span{width:38px;height:38px;display:grid;place-items:center;border-radius:10px}
+.chip span.on{background:var(--color-paper-3);color:var(--color-ink)}
+.panel{position:fixed;left:20px;top:20px;bottom:20px;width:380px;display:flex;flex-direction:column;gap:22px;padding:24px;border-radius:24px;background:var(--color-paper);color:var(--color-ink);box-shadow:0 30px 70px -30px var(--color-shadow);overflow:auto}
+.brand{display:flex;align-items:center;justify-content:space-between}
+.brand div{display:flex;align-items:center;gap:10px}
+.brand img{width:28px;height:28px}
+.brand b{font:600 16px var(--font-display);letter-spacing:-0.02em}
+.brand small{font:400 12px var(--font-mono);color:var(--color-ink-3)}
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--color-rule)}
+.tabs span{padding:0 0 12px;font:500 14px var(--font-body);color:var(--color-ink-3);white-space:nowrap}
+.tabs span.on{color:var(--color-ink);box-shadow:inset 0 -2px 0 var(--color-accent)}
+.spec{position:relative;padding-top:30px}
+.spec .bar{height:44px;border-radius:12px;background:linear-gradient(90deg,var(--color-warm),var(--color-cool));box-shadow:inset 0 0 0 1px oklch(30% 0.05 255 / 0.08)}
+.spec .mark{position:absolute;left:var(--x);top:24px;bottom:-6px;width:2px;margin-left:-1px;background:var(--color-ink);border-radius:1px}
+.spec .mark span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:4px;padding:2px 8px;border-radius:6px;background:var(--color-ink);color:var(--color-paper);font:500 12px var(--font-mono);white-space:nowrap}
+.spec .ends{display:flex;justify-content:space-between;margin-top:10px;font:400 11px var(--font-mono);color:var(--color-ink-3)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tile{font:500 12.5px var(--font-body);color:var(--color-ink-2)}
+.tile i{display:block;height:54px;border-radius:12px;margin-bottom:8px;background:var(--c);box-shadow:inset 0 0 0 1px oklch(30% 0.05 255 / 0.08)}
+.tile.on{color:var(--color-ink)}
+.tile.on i{box-shadow:0 0 0 2px var(--color-paper),0 0 0 3.5px var(--color-accent)}
+.sl .lbl{display:flex;justify-content:space-between;font:500 13px var(--font-body);margin-bottom:12px}
+.sl .lbl span{font:400 12px var(--font-mono);color:var(--color-ink-2)}
+.sl .tr{position:relative;height:4px;border-radius:2px;background:var(--color-paper-3)}
+.sl .tr i{position:absolute;inset:0 auto 0 0;width:var(--x);border-radius:2px;background:var(--color-ink)}
+.sl .tr b{position:absolute;top:50%;left:var(--x);width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:var(--color-paper);box-shadow:0 2px 6px var(--color-shadow),inset 0 0 0 1.5px var(--color-ink)}
+.foot{margin-top:auto;display:flex;gap:10px}
+.btn{flex:1;display:inline-flex;align-items:center;justify-content:center;height:46px;border-radius:12px;font:500 14px var(--font-body);white-space:nowrap}
+.btn--p{background:var(--color-ink);color:var(--color-paper)}
+.btn--g{background:var(--color-paper-2);color:var(--color-ink);box-shadow:inset 0 0 0 1px var(--color-rule)}
+@media (max-width:760px){
+  .panel{top:auto;left:8px;right:8px;bottom:8px;width:auto;max-height:64dvh;gap:16px;padding:18px;border-radius:22px}
+  .chip{top:14px;right:14px}
+  .brand small{display:none}
+  .tile i{height:44px}
+}
+</style></head><body>
+<div class="stage"></div>
+<div class="chip">
+  <span class="on"><svg class="i" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></svg></span>
+  <span><svg class="i" viewBox="0 0 24 24"><path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 11"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></span>
+  <span><svg class="i" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></span>
+  <span><svg class="i" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><path d="M3 3l18 18"/></svg></span>
+</div>
+<aside class="panel">
+  <div class="brand"><div><img src="../../../src/assets/blue-sun.svg" alt=""><b>Glowy</b></div><small>screen stays awake</small></div>
+  <div class="tabs"><span class="on">Tone</span><span>Glow</span><span>Shape</span><span>Saved</span></div>
+  <div class="spec" style="--x:64%"><div class="bar"></div><span class="mark"><span>5400 K</span></span><div class="ends"><span>2700 K warm</span><span>6500 K cool</span></div></div>
+  <div class="grid">
+    <div class="tile"><i style="--c:oklch(97% 0.012 240)"></i>Daylight</div>
+    <div class="tile on"><i style="--c:oklch(95.5% 0.03 220)"></i>Clear sky</div>
+    <div class="tile"><i style="--c:oklch(95% 0.035 90)"></i>Soft white</div>
+    <div class="tile"><i style="--c:oklch(89% 0.1 80)"></i>Golden</div>
+    <div class="tile"><i style="--c:oklch(89% 0.06 45)"></i>Peach</div>
+    <div class="tile"><i style="--c:oklch(91% 0.045 10)"></i>Rose</div>
+  </div>
+  <div class="sl"><div class="lbl">Blush<span>6%</span></div><div class="tr" style="--x:6%"><i></i><b></b></div></div>
+  <div class="sl"><div class="lbl">Brightness<span>100%</span></div><div class="tr" style="--x:100%"><i></i><b></b></div></div>
+  <div class="foot"><span class="btn btn--g">Save look</span><span class="btn btn--p">Preview call</span></div>
+</aside>
+</body></html>

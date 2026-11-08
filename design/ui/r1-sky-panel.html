@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>R1 Sky panel</title><link rel="stylesheet" href="base.css">
+<style>
+.light{background:radial-gradient(120% 90% at 70% 30%, oklch(99% 0.012 95), oklch(94% 0.035 230))}
+.top{position:fixed;inset:20px 20px auto 20px;display:flex;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;padding:6px 18px 6px 6px;border-radius:999px}
+.awake{margin-left:6px;padding:4px 10px;border-radius:999px;background:var(--sky-100);font-size:12px;font-weight:600;color:var(--muted);display:flex;gap:6px;align-items:center;white-space:nowrap}
+.awake i{width:8px;height:8px;border-radius:50%;background:oklch(75% 0.15 152);box-shadow:0 0 0 3px oklch(75% 0.15 152 / .25)}
+.tools{display:flex;gap:4px;padding:5px;border-radius:999px}
+.tools span{width:44px;height:44px;border-radius:50%;display:grid;place-items:center}
+.tools span.on{background:linear-gradient(180deg,var(--sky-300),var(--sky-400));box-shadow:0 3px 0 var(--sky-500),inset 0 2px 0 var(--hi)}
+.tools svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.panel{position:fixed;left:24px;bottom:24px;width:380px;padding:18px;display:flex;flex-direction:column;gap:18px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);padding:5px;border-radius:999px;background:var(--sky-200);box-shadow:inset 0 2px 4px var(--lo)}
+.seg span{text-align:center;padding:10px 0;font-weight:700;font-size:14px;color:var(--muted);border-radius:999px}
+.seg span.on{color:var(--ink);background:linear-gradient(180deg,var(--paper),var(--sky-50));box-shadow:0 4px 10px -4px var(--shadow-sky),inset 0 -2px 0 var(--lo)}
+.orbs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;text-align:center;font-size:11.5px;font-weight:600;color:var(--muted)}
+.orbs div{display:flex;flex-direction:column;align-items:center;gap:7px}
+.orbs .orb{width:44px;height:44px}
+.orbs .on .orb{outline:3px solid var(--sky-500);outline-offset:3px}
+.orbs .on{color:var(--ink)}
+hr{border:0;border-top:1.5px dashed var(--sky-300);margin:0}
+.save{width:100%}
+@media (max-width:640px){
+  .top{inset:12px 12px auto 12px}
+  .word,.awake{display:none} .brand{padding:6px}
+  .tools span{width:40px;height:40px}
+  .panel{left:8px;right:8px;bottom:8px;width:auto;gap:14px;border-radius:26px}
+  .orbs .orb{width:40px;height:40px}
+}
+</style></head><body>
+<div class="light"></div>
+<div class="top">
+  <div class="brand clay"><img class="logo" src="../../src/assets/blue-sun.svg"><span class="word">glowy</span><span class="awake"><i></i>Stays awake</span></div>
+  <div class="tools clay">
+    <span class="on"><svg viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></svg></span>
+    <span><svg viewBox="0 0 24 24"><path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 11"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></span>
+    <span><svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></span>
+    <span><svg viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><path d="M3 3l18 18"/></svg></span>
+  </div>
+</div>
+<section class="panel clay">
+  <div class="seg"><span class="on">Light</span><span>Shape</span><span>Saved</span></div>
+  <div class="orbs">
+    <div><span class="orb" style="--c:oklch(98% 0.01 230);--d:oklch(86% 0.04 235)"></span>Daylight</div>
+    <div class="on"><span class="orb" style="--c:oklch(96% 0.03 90);--d:oklch(85% 0.06 80)"></span>Soft</div>
+    <div><span class="orb" style="--c:oklch(92% 0.07 75);--d:oklch(80% 0.1 65)"></span>Warm</div>
+    <div><span class="orb" style="--c:oklch(88% 0.12 80);--d:oklch(74% 0.15 65)"></span>Golden</div>
+    <div><span class="orb" style="--c:oklch(88% 0.07 45);--d:oklch(76% 0.1 35)"></span>Peach</div>
+    <div><span class="orb" style="--c:oklch(89% 0.06 10);--d:oklch(77% 0.09 5)"></span>Rose</div>
+  </div>
+  <div><div class="row"><span>Warmth</span><span class="mono">5200 K</span></div><div class="track" style="background:linear-gradient(90deg,oklch(90% 0.05 235),oklch(88% 0.12 75))"><b style="left:38%"></b></div></div>
+  <div><div class="row"><span>Blush</span><span class="mono">8%</span></div><div class="track"><i style="width:8%"></i><b style="left:8%"></b></div></div>
+  <hr>
+  <div><div class="row"><span>Brightness</span><span class="mono">100%</span></div><div class="track"><i style="width:100%"></i><b style="left:100%"></b></div></div>
+  <span class="push save">Save this look</span>
+</section>
+</body></html>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" >
+  <defs>
+    <radialGradient id="c-bean-bg" cx="50%" cy="50%" r="70%"><stop offset="0" stop-color="#FFF4DA"/><stop offset="1" stop-color="#FCDDB0"/></radialGradient>
+    <radialGradient id="c-bean-halo" r="50%"><stop offset=".45" stop-color="#FFC94F" stop-opacity=".7"/><stop offset="1" stop-color="#FFC94F" stop-opacity="0"/></radialGradient>
+    <radialGradient id="c-bean-body" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#FFEB94"/><stop offset="1" stop-color="#FFAE3C"/></radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#c-bean-bg)"/>
+  <circle cx="256" cy="282" r="222" fill="url(#c-bean-halo)"/>
+  <path d="M256 128 C352 128 400 206 398 292 C396 374 334 412 256 412 C178 412 116 374 114 292 C112 206 160 128 256 128Z" fill="url(#c-bean-body)"/>
+  <ellipse cx="200" cy="186" rx="34" ry="18" fill="#FFFFFF" fill-opacity=".55" transform="rotate(-30 200 186)"/>
+  
+  <g transform="translate(256 290) scale(0.95)" stroke="#3B2C27" stroke-linecap="round" fill="none">
+    <circle cx="-42" cy="-12" r="11" fill="#3B2C27" stroke="none"/><circle cx="42" cy="-12" r="11" fill="#3B2C27" stroke="none"/>
+         <circle cx="-38" cy="-17" r="3.6" fill="#FFFFFF" stroke="none"/><circle cx="46" cy="-17" r="3.6" fill="#FFFFFF" stroke="none"/>
+    <path d="M-20 22 q20 20 40 0" stroke-width="11"/>
+    <ellipse cx="-70" cy="22" rx="17" ry="10" fill="#FF8A78" fill-opacity=".55" stroke="none"/>
+    <ellipse cx="70" cy="22" rx="17" ry="10" fill="#FF8A78" fill-opacity=".55" stroke="none"/>
+  </g>
+  <path d="M384 98 C 388.08 127.92 388.08 127.92 418 132 C 388.08 136.08 388.08 136.08 384 166 C 379.92 136.08 379.92 136.08 350 132 C 379.92 127.92 379.92 127.92 384 98Z" fill="#FF8A6E"/>
+  <path d="M140 104 C 141.92 118.08 141.92 118.08 156 120 C 141.92 121.92 141.92 121.92 140 136 C 138.08 121.92 138.08 121.92 124 120 C 138.08 118.08 138.08 118.08 140 104Z" fill="#FFFFFF"/></svg>

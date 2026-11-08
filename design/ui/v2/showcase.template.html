@@ -1,0 +1,220 @@
+<title>Glowy Interface Directions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif&display=swap">
+<style>
+/* Layout: one live stage (real device size, scaled to fit) beside a spec rail; a strip of live thumbnails below.
+   Single dark look on purpose: the directions are atmospheric and read truest on night blue. */
+:root{
+  --bg: oklch(13% 0.028 262);
+  --surface: oklch(17% 0.032 262);
+  --surface-2: oklch(22% 0.036 262);
+  --line: oklch(28% 0.03 262);
+  --fg: oklch(95% 0.012 240);
+  --fg-2: oklch(74% 0.025 245);
+  --fg-3: oklch(56% 0.03 250);
+  --accent: oklch(82% 0.1 226);
+  --accent-ink: oklch(16% 0.04 255);
+  --glow: oklch(70% 0.12 235 / 0.16);
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-body: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  background:radial-gradient(60% 40% at 80% 0%, var(--glow), transparent 70%),var(--bg);overflow-x:clip}
+.wrap{max-width:1360px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px}
+.mark{display:flex;align-items:center;gap:10px;font:500 14px var(--font-body);color:var(--fg-2)}
+.mark img{width:30px;height:30px}
+h1{margin:10px 0 0;font:400 clamp(40px,6vw,68px)/0.98 var(--font-display);letter-spacing:-0.015em;text-wrap:balance}
+h1 span{color:var(--accent)}
+.lede{max-width:60ch;margin:12px 0 0;color:var(--fg-2)}
+.meta{font:400 12.5px var(--font-mono);color:var(--fg-3);display:flex;flex-direction:column;gap:4px;text-align:right}
+
+.controls{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:14px;background:var(--surface)}
+.tabs button,.devices button{appearance:none;border:0;cursor:pointer;font:500 14px var(--font-body);color:var(--fg-3);background:transparent;border-radius:10px;padding:9px 14px;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;transition:color .15s,background-color .15s}
+.tabs button b{font:500 11.5px var(--font-mono);color:var(--fg-3)}
+.tabs button:hover,.devices button:hover{color:var(--fg)}
+.tabs button[aria-selected="true"],.devices button[aria-pressed="true"]{background:var(--surface-2);color:var(--fg)}
+.tabs button[aria-selected="true"] b{color:var(--accent)}
+.devices{display:flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:14px;background:var(--surface)}
+.devices button{font-size:13px;padding:8px 12px}
+.devices small{font:400 11px var(--font-mono);color:var(--fg-3)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.main{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+.stage{position:relative;min-width:0;border-radius:20px;background:var(--surface);padding:20px;display:flex;justify-content:center;align-items:center;min-height:240px}
+.frame{position:relative;flex:none;overflow:hidden;border-radius:14px;box-shadow:0 30px 70px -30px oklch(5% 0.02 262 / 0.9),0 0 0 1px var(--line);background:var(--bg)}
+.frame iframe{position:absolute;top:0;left:0;border:0;transform-origin:0 0;background:var(--bg)}
+.size{position:absolute;right:16px;bottom:10px;font:400 11.5px var(--font-mono);color:var(--fg-3)}
+
+.spec{display:flex;flex-direction:column;gap:18px;padding:22px;border-radius:20px;background:var(--surface);min-width:0}
+.spec h2{margin:0;font:400 34px/1 var(--font-display);letter-spacing:-0.01em}
+.spec .code{font:500 12px var(--font-mono);color:var(--accent)}
+.spec p{margin:0;color:var(--fg-2)}
+.spec dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 14px;font-size:13.5px}
+.spec dt{font:400 12px var(--font-mono);color:var(--fg-3);padding-top:2px}
+.spec dd{margin:0;color:var(--fg)}
+.chips{display:flex;gap:6px}
+.chips i{width:22px;height:22px;border-radius:6px;box-shadow:inset 0 0 0 1px oklch(100% 0 0 / 0.12)}
+.pick{display:inline-flex;justify-content:center;align-items:center;gap:8px;height:44px;border-radius:999px;border:0;cursor:pointer;font:500 14px var(--font-body);background:var(--accent);color:var(--accent-ink)}
+.pick:hover{filter:brightness(1.06)}
+.pick[data-picked="true"]{background:var(--surface-2);color:var(--fg)}
+.note{font-size:12.5px;color:var(--fg-3)}
+
+.strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.thumb{appearance:none;border:0;padding:0;cursor:pointer;text-align:left;background:none;color:inherit;display:flex;flex-direction:column;gap:10px;min-width:0}
+.thumb .tf{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;border-radius:12px;background:var(--surface);box-shadow:0 0 0 1px var(--line)}
+.thumb .tf iframe{position:absolute;top:0;left:0;width:1280px;height:800px;border:0;transform-origin:0 0;pointer-events:none}
+.thumb span{font:500 13.5px var(--font-body);color:var(--fg-2);display:flex;gap:8px}
+.thumb span b{font:500 11.5px var(--font-mono);color:var(--fg-3)}
+.thumb[aria-current="true"] .tf{box-shadow:0 0 0 2px var(--accent)}
+.thumb[aria-current="true"] span{color:var(--fg)}
+.thumb:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:12px}
+footer{font-size:13px;color:var(--fg-3);max-width:70ch}
+
+@media (max-width:980px){ .main{grid-template-columns:minmax(0,1fr)} .meta{text-align:left} }
+@media (max-width:640px){ .strip{grid-template-columns:repeat(2,minmax(0,1fr))} .stage{padding:12px} .tabs button{padding:8px 10px} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="mark"><img id="logo" alt=""> Glowy · soft light for video calls</div>
+      <h1>Four <span>atmospheric</span> directions</h1>
+      <p class="lede">The same controls (looks, warmth, brightness, shape, mirror and call preview) in four premium layouts. Each one below is the real mockup running live, at true device size.</p>
+    </div>
+    <div class="meta"><span>blue sunshine · ice-blue accent</span><span>Geist + Geist Mono</span><span>checked at 1280 · 844 · 390 · 320 px</span></div>
+  </header>
+
+  <div class="controls">
+    <div class="tabs" role="tablist" aria-label="Direction" id="tabs"></div>
+    <div class="devices" role="group" aria-label="Screen size" id="devices"></div>
+  </div>
+
+  <div class="main">
+    <div class="stage" id="stage">
+      <div class="frame" id="frame"><iframe id="live" title="Live mockup" sandbox="allow-same-origin"></iframe></div>
+      <span class="size" id="size"></span>
+    </div>
+    <aside class="spec" id="spec" aria-live="polite"></aside>
+  </div>
+
+  <div class="strip" id="strip"></div>
+
+  <footer>Mockups only: the controls don't respond yet. Pick a direction and it gets built into the app, then tested again on phones, tablets, foldables and ultrawide screens.</footer>
+</div>
+
+<script type="application/json" id="data">__DATA__</script>
+<script>
+(function(){
+  const data = JSON.parse(document.getElementById('data').textContent);
+  document.getElementById('logo').src = data.logo;
+  const D = [
+    { id:'a1', code:'A1', name:'Instrument strip', file:'a1-instrument',
+      blurb:'A dark navy bar along the bottom with separate panels for look, temperature and output. Reads like pro camera or audio gear.',
+      feel:'Precise, technical, calm', best:'Laptops and desktop monitors', phone:'Stacks into a two-column card', type:'Geist with large mono readouts',
+      chips:['oklch(15% 0.025 262)','oklch(20% 0.03 262)','oklch(80% 0.11 230)','oklch(86% 0.12 80)'] },
+    { id:'a2', code:'A2', name:'Night drawer', file:'a2-drawer',
+      blurb:'A dark drawer on the right, headed by the current look in large serif type, then a quiet list of tones and glows with their temperatures.',
+      feel:'Luxurious, editorial, quiet', best:'Halo and edge setups', phone:'Bottom sheet with a grab handle', type:'Instrument Serif title, Geist body',
+      chips:['oklch(13% 0.03 260)','oklch(18% 0.035 260)','oklch(82% 0.1 225)','oklch(97% 0.025 230)'] },
+    { id:'a3', code:'A3', name:'Quiet HUD', file:'a3-hud',
+      blurb:'Almost no interface. The look’s name sits large over the light, with a slim dock of looks and a brightness meter in the corner.',
+      feel:'Minimal, cinematic', best:'Phones and tablets used as a light', phone:'Dock along the bottom, title up top', type:'Geist display at tight tracking',
+      chips:['oklch(17% 0.03 258)','oklch(24% 0.035 258)','oklch(82% 0.1 225)','oklch(91% 0.12 82)'] },
+    { id:'a4', code:'A4', name:'Day sheet', file:'a4-day',
+      blurb:'A crisp white side panel with text tabs, a wide warm-to-cool bar with a kelvin marker, and flat colour tiles. The light-mode option.',
+      feel:'Clean, bright, Apple-like', best:'Daytime rooms with a window', phone:'Bottom sheet, scrolls inside', type:'Geist with mono labels',
+      chips:['oklch(98.5% 0.006 240)','oklch(92% 0.016 240)','oklch(55% 0.15 252)','oklch(21% 0.035 258)'] },
+  ];
+  const DEV = [
+    { id:'desk', name:'Desktop', w:1280, h:800 },
+    { id:'phone', name:'Phone', w:390, h:844 },
+    { id:'land', name:'Landscape', w:844, h:390 },
+    { id:'tiny', name:'Tiny', w:320, h:640 },
+  ];
+  let cur = 'a1', dev = 'desk';
+  let picked = null;
+  try { picked = localStorage.getItem('glowy-pick'); } catch(e) {}
+
+  const tabs = document.getElementById('tabs'), devices = document.getElementById('devices');
+  D.forEach(d => {
+    const b = document.createElement('button');
+    b.type='button'; b.role='tab'; b.id='tab-'+d.id; b.innerHTML = '<b>'+d.code+'</b>'+d.name;
+    b.addEventListener('click', () => { location.hash = d.id; });
+    tabs.appendChild(b);
+  });
+  DEV.forEach(v => {
+    const b = document.createElement('button');
+    b.type='button'; b.id='dev-'+v.id; b.innerHTML = v.name+' <small>'+v.w+'×'+v.h+'</small>';
+    b.addEventListener('click', () => { dev = v.id; render(); });
+    devices.appendChild(b);
+  });
+
+  const strip = document.getElementById('strip');
+  D.forEach(d => {
+    const t = document.createElement('button');
+    t.type='button'; t.className='thumb'; t.id='th-'+d.id; t.setAttribute('aria-label','Show '+d.name);
+    t.innerHTML = '<div class="tf"><iframe tabindex="-1" title="'+d.name+' thumbnail" sandbox="allow-same-origin"></iframe></div><span><b>'+d.code+'</b>'+d.name+'</span>';
+    t.querySelector('iframe').srcdoc = data.pages[d.file];
+    t.addEventListener('click', () => { location.hash = d.id; window.scrollTo({top:0,behavior:'smooth'}); });
+    strip.appendChild(t);
+  });
+  function fitThumbs(){
+    strip.querySelectorAll('.tf').forEach(tf => {
+      const s = tf.clientWidth / 1280; tf.querySelector('iframe').style.transform = 'scale('+s+')';
+    });
+  }
+
+  const live = document.getElementById('live'), frame = document.getElementById('frame'), stage = document.getElementById('stage');
+  let loaded = '';
+  function fit(){
+    const v = DEV.find(x => x.id === dev);
+    const pad = parseFloat(getComputedStyle(stage).paddingLeft) * 2;
+    const maxW = stage.clientWidth - pad;
+    const maxH = Math.max(320, Math.min(window.innerHeight * 0.72, 760));
+    const s = Math.min(1, maxW / v.w, maxH / v.h);
+    live.style.width = v.w+'px'; live.style.height = v.h+'px'; live.style.transform = 'scale('+s+')';
+    frame.style.width = Math.round(v.w*s)+'px'; frame.style.height = Math.round(v.h*s)+'px';
+    document.getElementById('size').textContent = v.w+'×'+v.h+' at '+Math.round(s*100)+'%';
+  }
+  function render(){
+    const d = D.find(x => x.id === cur);
+    if (loaded !== d.file) { live.srcdoc = data.pages[d.file]; loaded = d.file; }
+    D.forEach(x => {
+      const on = x.id === cur;
+      document.getElementById('tab-'+x.id).setAttribute('aria-selected', on);
+      document.getElementById('th-'+x.id).setAttribute('aria-current', on);
+    });
+    DEV.forEach(v => document.getElementById('dev-'+v.id).setAttribute('aria-pressed', v.id === dev));
+    const isPicked = picked === d.id;
+    document.getElementById('spec').innerHTML =
+      '<div><div class="code">'+d.code+' · direction</div><h2>'+d.name+'</h2></div>'+
+      '<p>'+d.blurb+'</p>'+
+      '<dl><dt>feel</dt><dd>'+d.feel+'</dd><dt>best for</dt><dd>'+d.best+'</dd><dt>on a phone</dt><dd>'+d.phone+'</dd><dt>type</dt><dd>'+d.type+'</dd><dt>palette</dt><dd class="chips">'+d.chips.map(c=>'<i style="background:'+c+'"></i>').join('')+'</dd></dl>'+
+      '<button type="button" class="pick" id="pick" data-picked="'+isPicked+'">'+(isPicked ? 'Marked as your favourite' : 'Mark as favourite')+'</button>'+
+      '<span class="note">'+(picked ? 'Your favourite: '+D.find(x=>x.id===picked).name+'. Saved in this browser only, so tell Claude your pick.' : 'Saved in this browser only. Tell Claude which one to build.')+'</span>';
+    document.getElementById('pick').addEventListener('click', () => {
+      picked = isPicked ? null : d.id;
+      try { picked ? localStorage.setItem('glowy-pick', picked) : localStorage.removeItem('glowy-pick'); } catch(e) {}
+      render();
+    });
+    fit();
+  }
+  function route(){
+    const h = location.hash.replace('#','');
+    if (D.some(d => d.id === h)) cur = h;
+    render();
+  }
+  window.addEventListener('hashchange', route);
+  new ResizeObserver(() => { fit(); fitThumbs(); }).observe(document.body);
+  route(); fitThumbs();
+})();
+</script>

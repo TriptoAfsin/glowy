@@ -1,0 +1,79 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A2 Night drawer</title><link rel="stylesheet" href="base.css">
+<style>
+/* Hallmark · genre: atmospheric · layout: right spec-drawer · theme: Lumen Night (blue-sunshine tune, serif display, roman) · nav: N4-style minimal · pre-emit critique: P5 H5 E4 S5 R4 V5 */
+:root{
+  --color-paper: oklch(13% 0.03 260);
+  --color-paper-2: oklch(18% 0.035 260);
+  --color-paper-3: oklch(23% 0.04 260);
+  --color-ink: oklch(95% 0.012 235);
+  --color-ink-2: oklch(74% 0.025 240);
+  --color-ink-3: oklch(55% 0.03 250);
+  --color-accent: oklch(82% 0.1 225);
+  --color-accent-ink: oklch(16% 0.04 255);
+  --color-shadow: oklch(5% 0.02 262 / 0.6);
+  --light-night: oklch(14% 0.035 262);
+  --light-ring: oklch(97% 0.025 230);
+  --light-glow: oklch(84% 0.08 230);
+}
+.stage{background:radial-gradient(circle closest-side at 40% 50%, var(--light-night) 0 50%, var(--light-glow) 56%, var(--light-ring) 62% 86%, var(--light-glow) 92%, var(--light-night) 112%),var(--light-night)}
+.brand{position:fixed;top:24px;left:24px;display:flex;align-items:center;gap:10px;color:var(--color-ink)}
+.brand img{width:28px;height:28px}
+.brand b{font:500 15px var(--font-display);letter-spacing:-0.01em}
+.drawer{position:fixed;top:16px;right:16px;bottom:16px;width:380px;display:flex;flex-direction:column;border-radius:22px;background:var(--color-paper);color:var(--color-ink);box-shadow:0 40px 80px -30px var(--color-shadow);overflow:hidden}
+.head{padding:28px 28px 20px}
+.head h1{margin:0;font:400 44px/1 var(--font-serif);letter-spacing:-0.01em;font-style:normal}
+.head h1 u{text-decoration:none;background:linear-gradient(var(--color-accent),var(--color-accent)) 0 100%/100% 2px no-repeat;padding-bottom:4px}
+.head p{margin:12px 0 0;font:400 12.5px var(--font-mono);color:var(--color-ink-2)}
+.list{flex:1;min-height:0;overflow:auto;padding:0 12px}
+.row{display:grid;grid-template-columns:20px minmax(0,1fr) auto 18px;align-items:center;gap:14px;padding:12px 16px;border-radius:14px;font-size:15px;color:var(--color-ink-2)}
+.row .sw{width:18px;height:18px;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px oklch(100% 0 0 / 0.15)}
+.row .k{font:400 12px var(--font-mono);color:var(--color-ink-3)}
+.row.on{background:var(--color-paper-2);color:var(--color-ink)}
+.row.on .k{color:var(--color-ink-2)}
+.group{padding:16px 28px 6px;font:500 11px var(--font-mono);letter-spacing:0.06em;color:var(--color-ink-3)}
+.adjust{padding:18px 28px;display:flex;flex-direction:column;gap:18px;background:var(--color-paper-2)}
+.sl .lbl{display:flex;justify-content:space-between;font-size:13px;color:var(--color-ink-2);margin-bottom:10px}
+.sl .lbl span{font-family:var(--font-mono);color:var(--color-ink)}
+.sl .tr{position:relative;height:2px;border-radius:2px;background:var(--color-paper-3)}
+.sl .tr i{position:absolute;inset:0 auto 0 0;width:var(--x);background:var(--color-ink-2);border-radius:2px}
+.sl .tr b{position:absolute;top:50%;left:var(--x);width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--color-ink);box-shadow:0 0 0 4px var(--color-paper-2)}
+.shape{display:flex;gap:6px}
+.shape span{flex:1;padding:9px 0;text-align:center;border-radius:10px;font-size:13px;color:var(--color-ink-3);background:var(--color-paper)}
+.shape span.on{color:var(--color-ink);background:var(--color-paper-3)}
+.foot{display:flex;gap:8px;padding:16px 20px 20px}
+.btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:46px;border-radius:999px;font:500 14px var(--font-body);white-space:nowrap}
+.btn--p{background:var(--color-accent);color:var(--color-accent-ink)}
+.btn--g{background:var(--color-paper-2);color:var(--color-ink)}
+.grab{display:none}
+@media (max-width:760px){
+  .stage{background:radial-gradient(circle closest-side at 50% 32%, var(--light-night) 0 50%, var(--light-glow) 56%, var(--light-ring) 62% 86%, var(--light-glow) 92%, var(--light-night) 112%),var(--light-night)}
+  .brand{top:16px;left:16px}
+  .drawer{top:auto;left:8px;right:8px;bottom:8px;width:auto;height:58dvh;border-radius:24px}
+  .grab{display:block;width:40px;height:4px;border-radius:2px;margin:10px auto 0;background:var(--color-paper-3)}
+  .head{padding:14px 22px 12px} .head h1{font-size:34px}
+  .adjust{padding:14px 22px;gap:14px}
+}
+</style></head><body>
+<div class="stage"></div>
+<div class="brand"><img src="../../../src/assets/blue-sun.svg" alt=""><b>Glowy</b></div>
+<aside class="drawer">
+  <span class="grab"></span>
+  <div class="head"><h1><u>Clear</u> halo</h1><p>6500 K · halo 28 · 88% · awake</p></div>
+  <div class="list">
+    <div class="group">TONES</div>
+    <div class="row on"><span class="sw" style="--c:oklch(97% 0.015 235)"></span>Daylight<span class="k">6500 K</span><svg class="i" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></div>
+    <div class="row"><span class="sw" style="--c:oklch(95% 0.03 90)"></span>Soft white<span class="k">5200 K</span><span></span></div>
+    <div class="row"><span class="sw" style="--c:oklch(89% 0.1 80)"></span>Golden<span class="k">3300 K</span><span></span></div>
+    <div class="group">GLOWS</div>
+    <div class="row"><span class="sw" style="--c:oklch(93% 0.05 230)"></span>Clear sky<span class="k">drift</span><span></span></div>
+    <div class="row"><span class="sw" style="--c:oklch(88% 0.06 45)"></span>Sunrise<span class="k">drift</span><span></span></div>
+    <div class="row"><span class="sw" style="--c:oklch(92% 0.04 290)"></span>Moonmilk<span class="k">drift</span><span></span></div>
+  </div>
+  <div class="adjust">
+    <div class="shape"><span>Fill</span><span class="on">Halo</span><span>Edge</span></div>
+    <div class="sl"><div class="lbl">Ring width<span>28</span></div><div class="tr" style="--x:52%"><i></i><b></b></div></div>
+    <div class="sl"><div class="lbl">Brightness<span>88%</span></div><div class="tr" style="--x:83%"><i></i><b></b></div></div>
+  </div>
+  <div class="foot"><span class="btn btn--g">Mirror</span><span class="btn btn--p">Preview call</span></div>
+</aside>
+</body></html>

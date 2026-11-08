@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="i-lens-buddy-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE6D6"/><stop offset="1" stop-color="#FFC9B6"/></linearGradient>
+    <linearGradient id="i-lens-buddy-body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFBF2"/><stop offset="1" stop-color="#FFEBD4"/></linearGradient>
+    <linearGradient id="i-lens-buddy-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE47A"/><stop offset="1" stop-color="#FFA23E"/></linearGradient>
+    <radialGradient id="i-lens-buddy-lens" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#6A4A5E"/><stop offset="1" stop-color="#2C1D27"/></radialGradient>
+    <filter id="i-lens-buddy-bloom" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#i-lens-buddy-bg)"/>
+  <rect x="96" y="128" width="320" height="250" rx="80" fill="url(#i-lens-buddy-body)"/>
+  <rect x="96" y="128" width="320" height="250" rx="80" fill="none" stroke="#F3CDB0" stroke-width="6"/>
+  <rect x="214" y="378" width="84" height="34" rx="12" fill="#F3CDB0"/>
+  <rect x="176" y="404" width="160" height="26" rx="13" fill="#F0BFA0"/>
+  <circle cx="256" cy="236" r="84" fill="none" stroke="#FFC24A" stroke-width="34" opacity=".8" filter="url(#i-lens-buddy-bloom)"/>
+  <circle cx="256" cy="236" r="84" fill="none" stroke="url(#i-lens-buddy-ring)" stroke-width="26"/>
+  <circle cx="256" cy="236" r="62" fill="url(#i-lens-buddy-lens)"/>
+  <circle cx="236" cy="214" r="15" fill="#FFFFFF" fill-opacity=".8"/>
+  <circle cx="276" cy="256" r="6" fill="#FFFFFF" fill-opacity=".5"/>
+  <path d="M238 340 q18 16 36 0" fill="none" stroke="#3B2C27" stroke-width="9" stroke-linecap="round"/>
+  <ellipse cx="150" cy="330" rx="18" ry="11" fill="#FF8A78" fill-opacity=".5"/>
+  <ellipse cx="362" cy="330" rx="18" ry="11" fill="#FF8A78" fill-opacity=".5"/>
+  <circle cx="368" cy="166" r="9" fill="#7BD88F"/>
+  <path opacity="1" d="M420 74 C 423.08 92.92 423.08 92.92 442 96 C 423.08 99.08 423.08 99.08 420 118 C 416.92 99.08 416.92 99.08 398 96 C 416.92 92.92 416.92 92.92 420 74Z" fill="#FFFFFF"/></svg>

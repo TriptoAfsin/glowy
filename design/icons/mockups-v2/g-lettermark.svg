@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="g-lettermark-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF4DF"/><stop offset="1" stop-color="#FFD9C4"/></linearGradient>
+    <linearGradient id="g-lettermark-g" x1="0" y1="0" x2=".6" y2="1"><stop offset="0" stop-color="#FFD25A"/><stop offset="1" stop-color="#FF8A5C"/></linearGradient>
+    <filter id="g-lettermark-bloom" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#g-lettermark-bg)"/>
+  <g opacity=".55" filter="url(#g-lettermark-bloom)" fill="none" stroke="#FFB648" stroke-width="64" stroke-linecap="round">
+    <circle cx="240" cy="222" r="92"/><path d="M332 140 V 306 C332 384 284 414 232 414 C 196 414 172 404 156 390"/>
+  </g>
+  <g fill="none" stroke="url(#g-lettermark-g)" stroke-width="58" stroke-linecap="round">
+    <circle cx="240" cy="222" r="92"/>
+    <path d="M332 140 V 306 C332 384 284 414 232 414 C 196 414 172 404 156 390"/>
+  </g>
+  <circle cx="240" cy="222" r="63" fill="#FFF8EA"/>
+  <path d="M190 176 A 72 72 0 0 1 236 154" fill="none" stroke="#FFFFFF" stroke-opacity=".75" stroke-width="10" stroke-linecap="round"/>
+  <path opacity="1" d="M398 98 C 401.64 120.36 401.64 120.36 424 124 C 401.64 127.64 401.64 127.64 398 150 C 394.36 127.64 394.36 127.64 372 124 C 394.36 120.36 394.36 120.36 398 98Z" fill="#FF8A6E"/></svg>

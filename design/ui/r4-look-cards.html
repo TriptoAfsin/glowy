@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>R4 Look cards</title><link rel="stylesheet" href="base.css">
+<style>
+.light{background:radial-gradient(60% 70% at 18% 92%, oklch(92% 0.1 85), transparent 70%),radial-gradient(70% 60% at 90% 10%, oklch(86% 0.09 235), transparent 70%),linear-gradient(180deg,oklch(94% 0.05 230),oklch(97% 0.03 90))}
+.top{position:fixed;inset:20px 24px auto 24px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{display:flex;gap:10px;align-items:center}
+.tools{display:flex;gap:8px}
+.tools span{height:44px;padding:0 16px;border-radius:999px;display:flex;align-items:center;font-weight:700;font-size:13px;white-space:nowrap}
+.sheet{position:fixed;left:24px;right:24px;bottom:24px;padding:20px 22px 22px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;border-radius:32px}
+.head{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.head h2{margin:0;font-size:20px;letter-spacing:-0.03em}
+.seg{display:flex;padding:4px;border-radius:999px;background:var(--sky-200);box-shadow:inset 0 2px 4px var(--lo)}
+.seg span{padding:8px 16px;font-weight:700;font-size:13px;color:var(--muted);border-radius:999px}
+.seg span.on{color:var(--ink);background:linear-gradient(180deg,var(--paper),var(--sky-50));box-shadow:0 4px 10px -4px var(--shadow-sky)}
+.cards{display:flex;gap:14px;padding:10px 2px 6px;overflow:hidden}
+.card{flex:none;width:132px;border-radius:22px;padding:8px;background:linear-gradient(180deg,var(--paper),var(--sky-100));box-shadow:0 14px 24px -14px var(--shadow-sky),inset 0 -3px 0 var(--lo),inset 0 2px 0 var(--hi);font-weight:700;font-size:13px}
+.card .pv{height:92px;border-radius:16px;margin-bottom:8px;box-shadow:inset 0 -6px 14px oklch(30% 0.08 255 / .12),inset 0 2px 0 var(--hi)}
+.card small{display:block;font:500 11px var(--mono);color:var(--muted);margin-top:2px}
+.card.on{transform:translateY(-8px) rotate(-1.5deg);box-shadow:0 24px 32px -16px var(--shadow-sky),0 0 0 3px var(--sky-500)}
+.card.add{display:grid;place-items:center;color:var(--sky-600);background:var(--sky-100);box-shadow:inset 0 0 0 2px var(--sky-300)}
+.right{display:flex;flex-direction:column;gap:16px;justify-content:flex-end}
+.t-full{display:inline}
+@media (max-width:760px){
+  .top{inset:12px 12px auto 12px} .word{display:none}
+  .tools{gap:6px} .tools span{padding:0 12px}
+  .tools .opt{display:none}
+  .sheet{left:8px;right:8px;bottom:8px;grid-template-columns:minmax(0,1fr);gap:14px;padding:16px;border-radius:28px}
+  .head{margin-bottom:6px}
+  .card{width:112px} .card .pv{height:72px}
+  .right{gap:12px}
+}
+</style></head><body>
+<div class="light"></div>
+<div class="top">
+  <div class="brand"><img class="logo" src="../../src/assets/blue-sun.svg"><span class="word">glowy</span></div>
+  <div class="tools"><span class="clay">Mirror</span><span class="clay">Preview</span><span class="clay opt">Full screen</span><span class="clay opt">Hide</span></div>
+</div>
+<section class="sheet clay">
+  <div>
+    <div class="head"><h2>Looks</h2><div class="seg"><span class="on">Glow</span><span>Tone</span><span>Shape</span></div></div>
+    <div class="cards">
+      <div class="card on"><div class="pv" style="background:radial-gradient(circle at 25% 80%,oklch(92% 0.1 85),transparent 70%),radial-gradient(circle at 80% 20%,oklch(86% 0.09 235),transparent 70%),oklch(95% 0.04 230)"></div>Blue sunrise<small>Glow · Fill</small></div>
+      <div class="card"><div class="pv" style="background:radial-gradient(circle at 30% 30%,oklch(98% 0.02 230),transparent 70%),oklch(90% 0.06 235)"></div>Clear sky<small>Glow · Fill</small></div>
+      <div class="card"><div class="pv" style="background:radial-gradient(circle closest-side,oklch(30% 0.04 262) 50%,oklch(97% 0.02 230) 60% 88%,oklch(30% 0.04 262))"></div>Clear halo<small>Daylight · Halo</small></div>
+      <div class="card"><div class="pv" style="background:radial-gradient(circle at 30% 30%,oklch(88% 0.13 80),transparent 70%),oklch(93% 0.08 88)"></div>Golden hour<small>Glow · Fill</small></div>
+      <div class="card"><div class="pv" style="background:radial-gradient(circle at 30% 70%,oklch(92% 0.05 290),transparent 70%),oklch(96% 0.02 260)"></div>Moonmilk<small>Glow · Fill</small></div>
+      <div class="card add">+ Save current</div>
+    </div>
+  </div>
+  <div class="right">
+    <div><div class="row"><span>Drift</span><span class="mono">Calm</span></div><div class="track"><i style="width:34%"></i><b style="left:34%"></b></div></div>
+    <div><div class="row"><span>Brightness</span><span class="mono">100%</span></div><div class="track"><i style="width:100%"></i><b style="left:100%"></b></div></div>
+    <span class="push push--sky">Hide controls and glow</span>
+  </div>
+</section>
+</body></html>

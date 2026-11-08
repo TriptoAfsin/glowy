@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <filter id="l-sky-ring-shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#1D5FA8" flood-opacity=".42"/></filter>
+    <filter id="l-sky-ring-soft" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#1D5FA8" flood-opacity=".3"/></filter>
+    <radialGradient id="l-sky-ring-shade" cx="32%" cy="26%" r="85%"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#7A3B00" stop-opacity=".28"/></radialGradient>
+    <linearGradient id="l-sky-ring-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EEF8FF"/><stop offset="1" stop-color="#B6DDFF"/></linearGradient>
+    <linearGradient id="l-sky-ring-ring" x1=".1" y1="0" x2=".9" y2="1"><stop offset="0" stop-color="#F6FCFF"/><stop offset=".45" stop-color="#7FCBFF"/><stop offset="1" stop-color="#3A7EF0"/></linearGradient>
+    <radialGradient id="l-sky-ring-sun" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#FFF8D0"/><stop offset=".6" stop-color="#FFD866"/><stop offset="1" stop-color="#FFB536"/></radialGradient>
+    <filter id="l-sky-ring-bloom" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#l-sky-ring-bg)"/>
+  <circle cx="256" cy="250" r="140" fill="none" stroke="#7FCBFF" stroke-width="70" opacity=".75" filter="url(#l-sky-ring-bloom)"/>
+  <g filter="url(#l-sky-ring-shadow)"><circle cx="256" cy="250" r="140" fill="none" stroke="url(#l-sky-ring-ring)" stroke-width="54"/></g>
+  <circle cx="256" cy="250" r="163" fill="none" stroke="#1D5FA8" stroke-opacity=".18" stroke-width="8"/>
+  <circle cx="256" cy="250" r="117" fill="none" stroke="#FFFFFF" stroke-opacity=".6" stroke-width="5"/>
+  <path d="M160 176 A 120 120 0 0 1 236 132" fill="none" stroke="#FFFFFF" stroke-opacity=".9" stroke-width="12" stroke-linecap="round"/>
+  
+  <g filter="url(#l-sky-ring-shadow)"><circle cx="256" cy="250" r="70" fill="url(#l-sky-ring-sun)"/></g>
+  <circle cx="256" cy="250" r="70" fill="url(#l-sky-ring-shade)"/>
+  <ellipse cx="235" cy="218.5" rx="28" ry="12.6" fill="#FFFFFF" fill-opacity="0.7" transform="rotate(-26 235 218.5)"/>
+   <circle cx="259.5" cy="206.6" r="3.5" fill="#FFFFFF" fill-opacity="0.7"/>
+  
+  <g transform="translate(256 256) scale(0.56)" stroke="#1F2A44" stroke-linecap="round" fill="none">
+    <path d="M-58 -12 q16 -20 32 0" stroke-width="12"/><path d="M26 -12 q16 -20 32 0" stroke-width="12"/>
+    <path d="M-20 22 q20 20 40 0" stroke-width="11"/>
+    <ellipse cx="-70" cy="22" rx="17" ry="10" fill="#FF9AA8" fill-opacity=".6" stroke="none"/>
+    <ellipse cx="70" cy="22" rx="17" ry="10" fill="#FF9AA8" fill-opacity=".6" stroke="none"/>
+  </g>
+  <path opacity="1" d="M398 88 C 401.92 112.08 401.92 112.08 426 116 C 401.92 119.92 401.92 119.92 398 144 C 394.08 119.92 394.08 119.92 370 116 C 394.08 112.08 394.08 112.08 398 88Z" fill="#FFFFFF"/>
+  <path opacity="0.9" d="M122 386 C 123.96 398.04 123.96 398.04 136 400 C 123.96 401.96 123.96 401.96 122 414 C 120.04 401.96 120.04 401.96 108 400 C 120.04 398.04 120.04 398.04 122 386Z" fill="#FFFFFF"/></svg>

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <filter id="m-sunny-cloud-shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#1D5FA8" flood-opacity=".42"/></filter>
+    <filter id="m-sunny-cloud-soft" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#1D5FA8" flood-opacity=".3"/></filter>
+    <radialGradient id="m-sunny-cloud-shade" cx="32%" cy="26%" r="85%"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#7A3B00" stop-opacity=".28"/></radialGradient>
+    <linearGradient id="m-sunny-cloud-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4FAEFF"/><stop offset="1" stop-color="#ACDDFF"/></linearGradient>
+    <radialGradient id="m-sunny-cloud-sun" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#FFF8D0"/><stop offset=".55" stop-color="#FFD866"/><stop offset="1" stop-color="#FFB536"/></radialGradient>
+    <radialGradient id="m-sunny-cloud-halo" r="50%"><stop offset=".5" stop-color="#FFF2B0" stop-opacity=".6"/><stop offset="1" stop-color="#FFF2B0" stop-opacity="0"/></radialGradient>
+    <linearGradient id="m-sunny-cloud-cloud" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".7" stop-color="#EAF4FF"/><stop offset="1" stop-color="#C9E2FA"/></linearGradient>
+    <clipPath id="m-sunny-cloud-clip"><rect width="512" height="512" rx="116"/></clipPath>
+  </defs>
+  <g clip-path="url(#m-sunny-cloud-clip)">
+    <rect width="512" height="512" fill="url(#m-sunny-cloud-bg)"/>
+    <circle cx="300" cy="206" r="200" fill="url(#m-sunny-cloud-halo)"/>
+    <g filter="url(#m-sunny-cloud-soft)"><g transform="rotate(0 300 206)">
+        <rect x="287" y="32" width="26" height="50" rx="13" fill="#F2B43C"/>
+        <rect x="287" y="28" width="26" height="50" rx="13" fill="#FFE27A"/>
+        <rect x="292.72" y="34.5" width="5.72" height="22.5" rx="2.86" fill="#FFFFFF" fill-opacity=".55"/>
+      </g><g transform="rotate(45 300 206)">
+        <rect x="287" y="32" width="26" height="50" rx="13" fill="#F2B43C"/>
+        <rect x="287" y="28" width="26" height="50" rx="13" fill="#FFE27A"/>
+        <rect x="292.72" y="34.5" width="5.72" height="22.5" rx="2.86" fill="#FFFFFF" fill-opacity=".55"/>
+      </g><g transform="rotate(90 300 206)">
+        <rect x="287" y="32" width="26" height="50" rx="13" fill="#F2B43C"/>
+        <rect x="287" y="28" width="26" height="50" rx="13" fill="#FFE27A"/>
+        <rect x="292.72" y="34.5" width="5.72" height="22.5" rx="2.86" fill="#FFFFFF" fill-opacity=".55"/>
+      </g><g transform="rotate(135 300 206)">
+        <rect x="287" y="32" width="26" height="50" rx="13" fill="#F2B43C"/>
+        <rect x="287" y="28" width="26" height="50" rx="13" fill="#FFE27A"/>
+        <rect x="292.72" y="34.5" width="5.72" height="22.5" rx="2.86" fill="#FFFFFF" fill-opacity=".55"/>
+      </g><g transform="rotate(180 300 206)">
+        <rect x="287" y="32" width="26" height="50" rx="13" fill="#F2B43C"/>
+        <rect x="287" y="28" width="26" height="50" rx="13" fill="#FFE27A"/>
+        <rect x="292.72" y="34.5" width="5.72" height="22.5" rx="2.86" fill="#FFFFFF" fill-opacity=".55"/>
+      </g><g transform="rotate(225 300 206)">
+        <rect x="287" y="32" width="26" height="50" rx="13" fill="#F2B43C"/>
+        <rect x="287" y="28" width="26" height="50" rx="13" fill="#FFE27A"/>
+        <rect x="292.72" y="34.5" width="5.72" height="22.5" rx="2.86" fill="#FFFFFF" fill-opacity=".55"/>
+      </g><g transform="rotate(270 300 206)">
+        <rect x="287" y="32" width="26" height="50" rx="13" fill="#F2B43C"/>
+        <rect x="287" y="28" width="26" height="50" rx="13" fill="#FFE27A"/>
+        <rect x="292.72" y="34.5" width="5.72" height="22.5" rx="2.86" fill="#FFFFFF" fill-opacity=".55"/>
+      </g><g transform="rotate(315 300 206)">
+        <rect x="287" y="32" width="26" height="50" rx="13" fill="#F2B43C"/>
+        <rect x="287" y="28" width="26" height="50" rx="13" fill="#FFE27A"/>
+        <rect x="292.72" y="34.5" width="5.72" height="22.5" rx="2.86" fill="#FFFFFF" fill-opacity=".55"/>
+      </g></g>
+    
+  <g filter="url(#m-sunny-cloud-shadow)"><circle cx="300" cy="206" r="108" fill="url(#m-sunny-cloud-sun)"/></g>
+  <circle cx="300" cy="206" r="108" fill="url(#m-sunny-cloud-shade)"/>
+  <ellipse cx="267.6" cy="157.4" rx="43.2" ry="19.439999999999998" fill="#FFFFFF" fill-opacity="0.7" transform="rotate(-26 267.6 157.4)"/>
+   <circle cx="305.4" cy="139.04000000000002" r="5.4" fill="#FFFFFF" fill-opacity="0.7"/>
+    
+  <g transform="translate(300 210) scale(0.85)" stroke="#1F2A44" stroke-linecap="round" fill="none">
+    <path d="M-58 -12 q16 -20 32 0" stroke-width="12"/><path d="M26 -12 q16 -20 32 0" stroke-width="12"/>
+    <path d="M-20 22 q20 20 40 0" stroke-width="11"/>
+    <ellipse cx="-70" cy="22" rx="17" ry="10" fill="#FF9AA8" fill-opacity=".6" stroke="none"/>
+    <ellipse cx="70" cy="22" rx="17" ry="10" fill="#FF9AA8" fill-opacity=".6" stroke="none"/>
+  </g>
+    <g filter="url(#m-sunny-cloud-shadow)">
+      <path d="M70 420 C 52 420 40 400 48 382 C 54 366 72 358 88 362 C 92 326 124 304 160 312 C 176 276 222 264 254 286 C 276 268 316 274 330 304 C 362 296 392 320 390 352 C 414 352 432 372 428 394 C 426 410 412 420 396 420 Z" fill="url(#m-sunny-cloud-cloud)"/>
+    </g>
+    <path d="M120 318 C 132 300 154 296 170 304" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round"/>
+    <path d="M214 286 C 228 274 246 274 258 282" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round"/>
+    <ellipse cx="172" cy="382" rx="14" ry="8" fill="#FF9AA8" fill-opacity=".5"/>
+    <ellipse cx="288" cy="382" rx="14" ry="8" fill="#FF9AA8" fill-opacity=".5"/>
+    <circle cx="202" cy="370" r="7" fill="#1F2A44"/><circle cx="258" cy="370" r="7" fill="#1F2A44"/>
+    <path d="M220 386 q10 10 20 0" fill="none" stroke="#1F2A44" stroke-width="6" stroke-linecap="round"/>
+    <path opacity="1" d="M110 92 C 112.8 109.2 112.8 109.2 130 112 C 112.8 114.8 112.8 114.8 110 132 C 107.2 114.8 107.2 114.8 90 112 C 107.2 109.2 107.2 109.2 110 92Z" fill="#FFFFFF"/>
+  </g></svg>
