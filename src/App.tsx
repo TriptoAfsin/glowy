@@ -1,12 +1,14 @@
-import { Camera, EyeOff, Maximize, Minimize, Video } from 'lucide-react'
+import { Camera, EyeOff, Maximize, Minimize, PictureInPicture2, Video } from 'lucide-react'
 import { type MouseEvent, useCallback, useEffect, useState } from 'react'
 import { Mirror } from './components/Camera'
 import { IconButton } from './components/controls'
 import { Dock, type LookTab, MAX_PRESETS, type Preset } from './components/Dock'
 import { LightStage } from './components/LightStage'
 import { MeetingPreview } from './components/MeetingPreview'
+import { PipLight } from './components/PipLight'
 import { Sunny } from './components/Sunny'
 import { isTouch, useCamera, useFullscreen, useIdle, useWakeLock } from './hooks/useDevice'
+import { usePip } from './hooks/usePip'
 import { DEFAULT_LOOK, type Look, SCENES, TONES } from './lib/light'
 import { usePersisted } from './lib/persist'
 
@@ -26,6 +28,7 @@ export default function App() {
   const { idle, hideNow } = useIdle(3500, previewOpen || dockHover)
   const wake = useWakeLock()
   const fs = useFullscreen()
+  const pip = usePip(look)
 
   const setLook = useCallback((patch: Partial<Look>) => setLookState((l) => ({ ...l, ...patch })), [setLookState])
 
@@ -67,6 +70,9 @@ export default function App() {
         case 'p':
           setPreviewOpen(true)
           break
+        case 'o':
+          if (pip.supported) pip.toggle()
+          break
         case 'arrowright':
           step(1)
           break
@@ -87,7 +93,7 @@ export default function App() {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [fs, hideNow, previewOpen, step, setLookState, setMinimised])
+  }, [fs, hideNow, previewOpen, step, setLookState, setMinimised, pip])
 
   const save = (_e: MouseEvent<HTMLButtonElement>) => {
     if (presets.length >= MAX_PRESETS) return
@@ -119,6 +125,16 @@ export default function App() {
           <IconButton label="Meeting preview" shortcut="P" onClick={() => setPreviewOpen(true)}>
             <Video size={18} aria-hidden />
           </IconButton>
+          {pip.supported && (
+            <IconButton
+              label={pip.isOpen ? 'Close pop-out light' : 'Pop out light'}
+              shortcut="O"
+              pressed={pip.isOpen}
+              onClick={pip.toggle}
+            >
+              <PictureInPicture2 size={18} aria-hidden />
+            </IconButton>
+          )}
           {fs.supported && (
             <IconButton label={fs.on ? 'Exit full screen' : 'Full screen'} shortcut="F" onClick={fs.toggle}>
               {fs.on ? <Minimize size={18} aria-hidden /> : <Maximize size={18} aria-hidden />}
@@ -171,6 +187,16 @@ export default function App() {
       )}
 
       <MeetingPreview open={previewOpen} onClose={() => setPreviewOpen(false)} camera={camera} look={look} />
+
+      {pip.win && (
+        <PipLight
+          win={pip.win}
+          look={look}
+          onStep={step}
+          onBrightness={(d) => setLookState((l) => ({ ...l, brightness: Math.max(30, Math.min(100, l.brightness + d)) }))}
+          onClose={pip.close}
+        />
+      )}
     </div>
   )
 }

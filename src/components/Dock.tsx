@@ -72,10 +72,6 @@ export function Dock(p: DockProps) {
 
   return (
     <section className="dock chrome" aria-label="Light controls">
-      <IconButton className="dock__min" label="Minimise controls" shortcut="M" onClick={() => p.onMinimise(true)}>
-        <ChevronDown size={16} aria-hidden />
-      </IconButton>
-
       {/* ── Look ── */}
       <div className="zone zone--look">
         <div className="zone__head">
@@ -254,15 +250,20 @@ export function Dock(p: DockProps) {
         <button type="button" className="btn btn--primary" onClick={p.onPreview}>
           Preview call
         </button>
-        <button
-          type="button"
-          className="btn btn--ghost"
-          onClick={p.onSave}
-          disabled={p.presets.length >= MAX_PRESETS}
-          title={p.presets.length >= MAX_PRESETS ? `You can keep up to ${MAX_PRESETS} looks` : undefined}
-        >
-          {p.presets.length >= MAX_PRESETS ? 'Saved list full' : 'Save look'}
-        </button>
+        <div className="go-row">
+          <button
+            type="button"
+            className="btn btn--ghost"
+            onClick={p.onSave}
+            disabled={p.presets.length >= MAX_PRESETS}
+            title={p.presets.length >= MAX_PRESETS ? `You can keep up to ${MAX_PRESETS} looks` : undefined}
+          >
+            {p.presets.length >= MAX_PRESETS ? 'List full' : 'Save look'}
+          </button>
+          <IconButton className="btn btn--ghost btn--icon" label="Minimise controls" shortcut="M" onClick={() => p.onMinimise(true)}>
+            <ChevronDown size={18} aria-hidden />
+          </IconButton>
+        </div>
       </div>
     </section>
   )
