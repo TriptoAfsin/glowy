@@ -1,0 +1,19 @@
+# Cloudflare static asset headers (copied into dist/ by Vite).
+
+# The service worker and manifest must never be cached, or updates stall.
+/sw.js
+  Cache-Control: no-cache
+/registerSW.js
+  Cache-Control: no-cache
+/manifest.webmanifest
+  Cache-Control: no-cache
+  Content-Type: application/manifest+json
+
+# Hashed build files never change.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(self), microphone=(), geolocation=()

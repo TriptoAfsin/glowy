@@ -1,0 +1,11 @@
+{
+  // Glowy is a static PWA: Cloudflare Workers serves the Vite build as static assets, no Worker script needed.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "glowy",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // Any unknown path serves index.html (single-page app).
+    "not_found_handling": "single-page-application"
+  }
+}
